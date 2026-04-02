@@ -4,5 +4,6 @@
     {
         int hola;
         int adios;
+        bool esVerdadero;
     }
 }
