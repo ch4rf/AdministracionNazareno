@@ -7,5 +7,6 @@
         bool esVerdadero;
 
         bool insanopro;
+        //Hola, esto es un comentario de una ia xddd
     }
 }
