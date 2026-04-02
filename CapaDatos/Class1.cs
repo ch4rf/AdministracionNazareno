@@ -5,5 +5,7 @@
         int hola;
         int adios;
         bool esVerdadero;
+
+        bool insanopro;
     }
 }
