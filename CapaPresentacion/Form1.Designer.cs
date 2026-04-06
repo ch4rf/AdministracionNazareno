@@ -32,6 +32,7 @@
             miembrosToolStripMenuItem = new ToolStripMenuItem();
             verToolStripMenuItem = new ToolStripMenuItem();
             registrarMiembroToolStripMenuItem = new ToolStripMenuItem();
+            gestionFamiliaToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // 
             // miembrosToolStripMenuItem
             // 
-            miembrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verToolStripMenuItem, registrarMiembroToolStripMenuItem });
+            miembrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verToolStripMenuItem, registrarMiembroToolStripMenuItem, gestionFamiliaToolStripMenuItem });
             miembrosToolStripMenuItem.Name = "miembrosToolStripMenuItem";
             miembrosToolStripMenuItem.Size = new Size(90, 24);
             miembrosToolStripMenuItem.Text = "Miembros";
@@ -67,6 +68,13 @@
             registrarMiembroToolStripMenuItem.Size = new Size(216, 26);
             registrarMiembroToolStripMenuItem.Text = "Registrar Miembro";
             registrarMiembroToolStripMenuItem.Click += registrarMiembroToolStripMenuItem_Click;
+            // 
+            // gestionFamiliaToolStripMenuItem
+            // 
+            gestionFamiliaToolStripMenuItem.Name = "gestionFamiliaToolStripMenuItem";
+            gestionFamiliaToolStripMenuItem.Size = new Size(180, 22);
+            gestionFamiliaToolStripMenuItem.Text = "Gestion Familia";
+            gestionFamiliaToolStripMenuItem.Click += gestionFamiliaToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -94,5 +102,6 @@
         private ToolStripMenuItem miembrosToolStripMenuItem;
         private ToolStripMenuItem verToolStripMenuItem;
         private ToolStripMenuItem registrarMiembroToolStripMenuItem;
+        private ToolStripMenuItem gestionFamiliaToolStripMenuItem;
     }
 }
