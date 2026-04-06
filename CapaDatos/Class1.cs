@@ -11,5 +11,7 @@
 
         int gengarEstuvoAqui;
         //gai elque lo lea
+
+        int holaMundo;
     }
 }
