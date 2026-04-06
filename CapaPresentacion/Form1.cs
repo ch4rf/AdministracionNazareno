@@ -25,5 +25,12 @@ namespace CapaPresentacion
             frmRegistrar.MdiParent = this;
             frmRegistrar.Show();
         }
+
+        private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmGestionFamilias frm = new frmGestionFamilias();
+            frm.MdiParent = this; 
+            frm.Show();
+        }
     }
 }
