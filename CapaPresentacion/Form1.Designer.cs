@@ -38,31 +38,34 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { miembrosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(914, 30);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.ItemClicked += menuStrip1_ItemClicked;
             // 
             // miembrosToolStripMenuItem
             // 
             miembrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verToolStripMenuItem, registrarMiembroToolStripMenuItem, gestionFamiliaToolStripMenuItem });
             miembrosToolStripMenuItem.Name = "miembrosToolStripMenuItem";
-            miembrosToolStripMenuItem.Size = new Size(73, 20);
+            miembrosToolStripMenuItem.Size = new Size(90, 24);
             miembrosToolStripMenuItem.Text = "Miembros";
             // 
             // verToolStripMenuItem
             // 
             verToolStripMenuItem.Name = "verToolStripMenuItem";
-            verToolStripMenuItem.Size = new Size(180, 22);
+            verToolStripMenuItem.Size = new Size(216, 26);
             verToolStripMenuItem.Text = "Ver Miembros";
             verToolStripMenuItem.Click += verToolStripMenuItem_Click;
             // 
             // registrarMiembroToolStripMenuItem
             // 
             registrarMiembroToolStripMenuItem.Name = "registrarMiembroToolStripMenuItem";
-            registrarMiembroToolStripMenuItem.Size = new Size(180, 22);
+            registrarMiembroToolStripMenuItem.Size = new Size(216, 26);
             registrarMiembroToolStripMenuItem.Text = "Registrar Miembro";
             registrarMiembroToolStripMenuItem.Click += registrarMiembroToolStripMenuItem_Click;
             // 
@@ -75,12 +78,13 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(menuStrip1);
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
