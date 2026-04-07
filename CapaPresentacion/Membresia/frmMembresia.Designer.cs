@@ -63,7 +63,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(1230, 618);
+            btnEliminar.Location = new Point(1716, 997);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(165, 33);
             btnEliminar.TabIndex = 22;
@@ -148,7 +148,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1904, 1041);
+            AutoScroll = true;
+            ClientSize = new Size(1234, 611);
             Controls.Add(btnNuevo);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);
@@ -160,9 +161,9 @@
             Controls.Add(txtBuscar);
             Controls.Add(dgMiembros);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
-            MinimizeBox = false;
             Name = "frmMembresia";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "NUEVO REGISTRO";

@@ -9,44 +9,35 @@ namespace CapaDatos
     public class CD_Miembros
     {
         // ¡Actualizado apuntando a tu nueva base de datos BD_IGLESIA!
-        private string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=BD_IGLESIA;Integrated Security=true;";
-
+        
+        private string cadenaConexion = "Server=(localdb)\\MSSQLLocalDB;Database=BD_IGLESIA;Integrated Security=true;";
         public DataTable Mostrar()
         {
+            // Creamos la tabla en memoria donde se guardarán los resultados de SQL
             DataTable dt = new DataTable();
 
             using (SqlConnection conexion = new SqlConnection(cadenaConexion))
             {
                 try
                 {
-                    // La consulta que trae los datos bonitos (con los nombres en vez de los números de ID)
-                    string query = @"
-                        SELECT 
-                            M.ID_Miembro,
-                            M.Nombres,
-                            M.Apellidos,
-                            G.Descripcion AS Genero,
-                            M.Fecha_Nacimiento,
-                            P.Descripcion AS Profesion,
-                            E.Descripcion AS Estado_Actual
-                        FROM MIEMBROS M
-                        INNER JOIN Cat_Genero G ON M.ID_Genero = G.ID_Genero
-                        INNER JOIN Cat_Estado_Miembro E ON M.ID_Estado = E.ID_Estado
-                        LEFT JOIN Cat_Profesiones P ON M.ID_Profesion = P.ID_Profesion;";
+                    SqlCommand cmd = new SqlCommand("sp_MostrarMiembros", conexion);
+                    // Le decimos explícitamente que es un Procedimiento Almacenado
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlCommand cmd = new SqlCommand(query, conexion);
-                    cmd.CommandType = CommandType.Text;
-
+                    // El DataAdapter es el puente entre SQL y nuestro DataTable en C#
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                    // Llena el DataTable (Abre y cierra la conexión por detrás)
                     da.Fill(dt);
                 }
                 catch (Exception ex)
                 {
+                    // Si algo falla (ej. servidor apagado), mandamos el error hacia arriba
                     throw new Exception("Error al cargar los miembros desde la BD: " + ex.Message);
                 }
             }
 
-            return dt;
+            return dt; // Retornamos la tabla llena de datos
         }
     }
 }
