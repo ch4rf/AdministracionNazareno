@@ -70,5 +70,32 @@ namespace CapaDatos
 
             return dt; // Retornamos la tabla llena de datos
         }
+
+        // miembros por ministerio
+        public DataTable ListarMiembrosPorMinisterio(int idMinisterio)
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_MostrarMiembrosPorMinisterio", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Aquí le pasamos el parámetro que SQL está esperando
+                    cmd.Parameters.AddWithValue("@IdMinisterio", idMinisterio);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al filtrar miembros del ministerio: " + ex.Message);
+                }
+            }
+
+            return dt;
+        }
     }
 }

@@ -21,5 +21,10 @@ namespace CapaNegocio
         {
             return objDatos.ListarMinisterios();
         }
+
+        public DataTable MostrarMiembrosPorMinisterio(int idMinisterio)
+        {
+            return objDatos.ListarMiembrosPorMinisterio(idMinisterio);
+        }
     }
 }
