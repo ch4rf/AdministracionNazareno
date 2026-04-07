@@ -11,8 +11,7 @@ namespace CapaPresentacion
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            frmActividades frmActividades = new frmActividades(); //prueba hecha por jquimy
-            frmActividades.Show();                                  //prueba hecha por jquimy
+
         }
 
         private void verToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +46,13 @@ namespace CapaPresentacion
             frmMinisterios frmMinisterios = new frmMinisterios();
             frmMinisterios.MdiParent = this;
             frmMinisterios.Show();
+        }
+
+        private void verActividadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {    
+            frmActividades frmActividades = new frmActividades(); //prueba hecha por jquimy
+            frmActividades.MdiParent = this;
+            frmActividades.Show();                                  //prueba hecha por jquimy
         }
     }
 }
