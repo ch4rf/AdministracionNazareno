@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CapaDatos;
+using CapaNegocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +15,19 @@ namespace CapaPresentacion
         public frmMinisterios()
         {
             InitializeComponent();
+        }
+
+        private void frmMinisterios_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                CN_Miembros objLogica = new CN_Miembros();
+                dgMinisterios.DataSource = objLogica.MostrarMinisterios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

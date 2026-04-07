@@ -6,7 +6,7 @@ namespace CapaPresentacion
         public Form1()
         {
             InitializeComponent();
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -38,8 +38,15 @@ namespace CapaPresentacion
         private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGestionFamilias frm = new frmGestionFamilias();
-            frm.MdiParent = this; 
+            frm.MdiParent = this;
             frm.Show();
+        }
+
+        private void verMinisteriosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMinisterios frmMinisterios = new frmMinisterios();
+            frmMinisterios.MdiParent = this;
+            frmMinisterios.Show();
         }
     }
 }

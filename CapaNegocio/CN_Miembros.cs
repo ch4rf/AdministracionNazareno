@@ -10,11 +10,16 @@ namespace CapaNegocio
     {
         private CD_Miembros objDatos = new CD_Miembros();
 
+        // metodo para mostrar los miembros
         public DataTable MostrarMiembros()
         {
-            // Aquí Saúl podría agregar reglas de negocio si fuera necesario, 
-            // pero para una simple lectura, solo retorna el método de tu capa.
-            return objDatos.Mostrar();
+            return objDatos.ListarMiembros();
+        }
+
+        // metodo para mostrar los ministerios
+        public DataTable MostrarMinisterios()
+        {
+            return objDatos.ListarMinisterios();
         }
     }
 }

@@ -80,7 +80,7 @@
             Controls.Add(label1);
             Name = "frmMinisterios";
             Text = "frmMinisterios";
-            Load += this.frmMinisterios_Load;
+            Load += frmMinisterios_Load;
             ((System.ComponentModel.ISupportInitialize)dgMinisterios).EndInit();
             ResumeLayout(false);
             PerformLayout();
