@@ -37,13 +37,14 @@
             verMinisteriosToolStripMenuItem = new ToolStripMenuItem();
             actividadesToolStripMenuItem = new ToolStripMenuItem();
             verActividadesToolStripMenuItem = new ToolStripMenuItem();
+            catalogosToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miembrosToolStripMenuItem, ministeriosToolStripMenuItem, actividadesToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miembrosToolStripMenuItem, ministeriosToolStripMenuItem, actividadesToolStripMenuItem, catalogosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -61,21 +62,21 @@
             // verToolStripMenuItem
             // 
             verToolStripMenuItem.Name = "verToolStripMenuItem";
-            verToolStripMenuItem.Size = new Size(172, 22);
+            verToolStripMenuItem.Size = new Size(180, 22);
             verToolStripMenuItem.Text = "Ver Miembros";
             verToolStripMenuItem.Click += verToolStripMenuItem_Click;
             // 
             // registrarMiembroToolStripMenuItem
             // 
             registrarMiembroToolStripMenuItem.Name = "registrarMiembroToolStripMenuItem";
-            registrarMiembroToolStripMenuItem.Size = new Size(172, 22);
+            registrarMiembroToolStripMenuItem.Size = new Size(180, 22);
             registrarMiembroToolStripMenuItem.Text = "Registrar Miembro";
             registrarMiembroToolStripMenuItem.Click += registrarMiembroToolStripMenuItem_Click;
             // 
             // gestionFamiliaToolStripMenuItem
             // 
             gestionFamiliaToolStripMenuItem.Name = "gestionFamiliaToolStripMenuItem";
-            gestionFamiliaToolStripMenuItem.Size = new Size(172, 22);
+            gestionFamiliaToolStripMenuItem.Size = new Size(180, 22);
             gestionFamiliaToolStripMenuItem.Text = "Gestion Familia";
             gestionFamiliaToolStripMenuItem.Click += gestionFamiliaToolStripMenuItem_Click;
             // 
@@ -89,7 +90,7 @@
             // verMinisteriosToolStripMenuItem
             // 
             verMinisteriosToolStripMenuItem.Name = "verMinisteriosToolStripMenuItem";
-            verMinisteriosToolStripMenuItem.Size = new Size(151, 22);
+            verMinisteriosToolStripMenuItem.Size = new Size(180, 22);
             verMinisteriosToolStripMenuItem.Text = "Ver Ministerios";
             verMinisteriosToolStripMenuItem.Click += verMinisteriosToolStripMenuItem_Click;
             // 
@@ -106,6 +107,13 @@
             verActividadesToolStripMenuItem.Size = new Size(180, 22);
             verActividadesToolStripMenuItem.Text = "Ver Actividades";
             verActividadesToolStripMenuItem.Click += verActividadesToolStripMenuItem_Click;
+            // 
+            // catalogosToolStripMenuItem
+            // 
+            catalogosToolStripMenuItem.Name = "catalogosToolStripMenuItem";
+            catalogosToolStripMenuItem.Size = new Size(72, 20);
+            catalogosToolStripMenuItem.Text = "Catalogos";
+            catalogosToolStripMenuItem.Click += catalogosToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -137,5 +145,6 @@
         private ToolStripMenuItem verMinisteriosToolStripMenuItem;
         private ToolStripMenuItem actividadesToolStripMenuItem;
         private ToolStripMenuItem verActividadesToolStripMenuItem;
+        private ToolStripMenuItem catalogosToolStripMenuItem;
     }
 }

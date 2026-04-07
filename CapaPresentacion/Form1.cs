@@ -1,3 +1,5 @@
+using CapaPresentacion.Mantenimiento;
+
 namespace CapaPresentacion
 
 {
@@ -49,10 +51,17 @@ namespace CapaPresentacion
         }
 
         private void verActividadesToolStripMenuItem_Click(object sender, EventArgs e)
-        {    
+        {
             frmActividades frmActividades = new frmActividades(); //prueba hecha por jquimy
             frmActividades.MdiParent = this;
             frmActividades.Show();                                  //prueba hecha por jquimy
+        }
+
+        private void catalogosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MantenimientoCatalogos frmCatalogos = new MantenimientoCatalogos();
+            frmCatalogos.MdiParent = this;
+            frmCatalogos.Show();
         }
     }
 }

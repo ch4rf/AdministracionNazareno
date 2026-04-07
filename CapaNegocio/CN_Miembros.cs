@@ -22,6 +22,7 @@ namespace CapaNegocio
             return objDatos.ListarMinisterios();
         }
 
+        // metodo para mostrar los miembros por ministerio
         public DataTable MostrarMiembrosPorMinisterio(int idMinisterio)
         {
             return objDatos.ListarMiembrosPorMinisterio(idMinisterio);
