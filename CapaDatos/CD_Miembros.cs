@@ -9,7 +9,7 @@ namespace CapaDatos
     public class CD_Miembros
     {
         // ¡Actualizado apuntando a tu nueva base de datos BD_IGLESIA!
-        private string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=BD_IGLESIA;Integrated Security=true;";
+        private string cadenaConexion = @"Server=DESKTOP-2H6A21O;Database=IglesiaBD;Integrated Security=true;";
 
         public DataTable Mostrar()
         {

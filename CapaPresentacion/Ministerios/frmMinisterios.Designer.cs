@@ -28,18 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
+            label1 = new Label();
+            dgMinisterios = new DataGridView();
+            textBox1 = new TextBox();
+            label2 = new Label();
+            ((System.ComponentModel.ISupportInitialize)dgMinisterios).BeginInit();
             SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(122, 30);
+            label1.TabIndex = 0;
+            label1.Text = "Ministerios";
+            // 
+            // dgMinisterios
+            // 
+            dgMinisterios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgMinisterios.Location = new Point(24, 166);
+            dgMinisterios.Name = "dgMinisterios";
+            dgMinisterios.Size = new Size(1211, 345);
+            dgMinisterios.TabIndex = 1;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(75, 124);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(183, 23);
+            textBox1.TabIndex = 2;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(24, 124);
+            label2.Name = "label2";
+            label2.Size = new Size(45, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Buscar:";
             // 
             // frmMinisterios
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1350, 729);
+            ClientSize = new Size(1904, 1061);
+            Controls.Add(label2);
+            Controls.Add(textBox1);
+            Controls.Add(dgMinisterios);
+            Controls.Add(label1);
             Name = "frmMinisterios";
             Text = "frmMinisterios";
+            Load += this.frmMinisterios_Load;
+            ((System.ComponentModel.ISupportInitialize)dgMinisterios).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label label1;
+        private DataGridView dgMinisterios;
+        private TextBox textBox1;
+        private Label label2;
     }
 }
