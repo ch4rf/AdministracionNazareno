@@ -60,7 +60,7 @@ namespace CapaPresentacion
 
         private void catalogosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MantenimientoCatalogos frmCatalogos = new MantenimientoCatalogos();
+            frmMantenimientoCatalogos frmCatalogos = new frmMantenimientoCatalogos();
             frmCatalogos.MdiParent = this;
             frmCatalogos.Show();
         }
