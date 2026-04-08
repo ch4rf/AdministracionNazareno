@@ -1,4 +1,5 @@
 using CapaPresentacion.Mantenimiento;
+using CapaPresentacion.Membresia;
 
 namespace CapaPresentacion
 
@@ -18,7 +19,7 @@ namespace CapaPresentacion
 
         private void verToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmMembresia frmMembresia = new frmMembresia();
+            frmMembresiaNuevo frmMembresia = new frmMembresiaNuevo();
             frmMembresia.MdiParent = this;
             frmMembresia.Show();
 

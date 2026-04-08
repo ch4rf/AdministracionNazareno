@@ -34,8 +34,8 @@
             gbMinisterios = new GroupBox();
             btnNuevoMinisterio = new Button();
             groupBox1 = new GroupBox();
-            dgMiembros = new DataGridView();
             btnAsignarMiebro = new Button();
+            dgMiembros = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgMinisterios).BeginInit();
             gbMinisterios.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -44,6 +44,8 @@
             // 
             // dgMinisterios
             // 
+            dgMinisterios.AllowUserToAddRows = false;
+            dgMinisterios.AllowUserToDeleteRows = false;
             dgMinisterios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgMinisterios.Location = new Point(44, 86);
             dgMinisterios.Name = "dgMinisterios";
@@ -102,14 +104,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Miembros por Ministerio";
             // 
-            // dgMiembros
-            // 
-            dgMiembros.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgMiembros.Location = new Point(16, 86);
-            dgMiembros.Name = "dgMiembros";
-            dgMiembros.Size = new Size(861, 345);
-            dgMiembros.TabIndex = 1;
-            // 
             // btnAsignarMiebro
             // 
             btnAsignarMiebro.Location = new Point(16, 450);
@@ -118,6 +112,14 @@
             btnAsignarMiebro.TabIndex = 5;
             btnAsignarMiebro.Text = "+ Asignar Miembro";
             btnAsignarMiebro.UseVisualStyleBackColor = true;
+            // 
+            // dgMiembros
+            // 
+            dgMiembros.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgMiembros.Location = new Point(16, 86);
+            dgMiembros.Name = "dgMiembros";
+            dgMiembros.Size = new Size(861, 345);
+            dgMiembros.TabIndex = 1;
             // 
             // frmMinisterios
             // 

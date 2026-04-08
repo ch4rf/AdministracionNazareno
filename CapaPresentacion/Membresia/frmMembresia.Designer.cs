@@ -81,7 +81,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1040, 566);
+            button1.Location = new Point(1042, 566);
             button1.Name = "button1";
             button1.Size = new Size(165, 33);
             button1.TabIndex = 20;
@@ -149,7 +149,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1234, 611);
+            ClientSize = new Size(1464, 746);
             Controls.Add(btnNuevo);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);

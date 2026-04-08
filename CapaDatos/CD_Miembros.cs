@@ -9,7 +9,7 @@ namespace CapaDatos
     public class CD_Miembros
     {
         
-        private string cadenaConexion = "Server=DESKTOP-2H6A21O;Database=BDNazareno;Integrated Security=true;";
+        private string cadenaConexion = "Server=JOSE;Database=IglesiaBD;Integrated Security=true;";
 
         // metodo para mostrar los miembros
         public DataTable ListarMiembros()

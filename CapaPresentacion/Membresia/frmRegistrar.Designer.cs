@@ -31,6 +31,10 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox1 = new GroupBox();
+            comboBox2 = new ComboBox();
+            label14 = new Label();
+            comboBox1 = new ComboBox();
+            label13 = new Label();
             dateTimePicker4 = new DateTimePicker();
             dateTimePicker3 = new DateTimePicker();
             dateTimePicker2 = new DateTimePicker();
@@ -38,7 +42,7 @@
             textBox7 = new TextBox();
             textBox6 = new TextBox();
             textBox5 = new TextBox();
-            textBox4 = new TextBox();
+            txtTelefono = new TextBox();
             label12 = new Label();
             label11 = new Label();
             label10 = new Label();
@@ -47,10 +51,10 @@
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
-            dateTimePicker1 = new DateTimePicker();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
+            tdFechaNacimiento = new DateTimePicker();
+            txtDPI = new TextBox();
+            txtApellidos = new TextBox();
+            txtNombres = new TextBox();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
@@ -58,10 +62,6 @@
             tabPage2 = new TabPage();
             tabPage3 = new TabPage();
             tabPage4 = new TabPage();
-            label13 = new Label();
-            comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
-            label14 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -103,7 +103,7 @@
             groupBox1.Controls.Add(textBox7);
             groupBox1.Controls.Add(textBox6);
             groupBox1.Controls.Add(textBox5);
-            groupBox1.Controls.Add(textBox4);
+            groupBox1.Controls.Add(txtTelefono);
             groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(label11);
             groupBox1.Controls.Add(label10);
@@ -112,21 +112,55 @@
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(dateTimePicker1);
-            groupBox1.Controls.Add(textBox3);
-            groupBox1.Controls.Add(textBox2);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(tdFechaNacimiento);
+            groupBox1.Controls.Add(txtDPI);
+            groupBox1.Controls.Add(txtApellidos);
+            groupBox1.Controls.Add(txtNombres);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(23, 29);
+            groupBox1.Location = new Point(24, 26);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(760, 584);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "INFORMACION DE IDENTIDAD";
             groupBox1.Enter += groupBox1_Enter;
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(357, 491);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(267, 23);
+            comboBox2.TabIndex = 28;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(357, 470);
+            label14.Name = "label14";
+            label14.Size = new Size(72, 15);
+            label14.TabIndex = 27;
+            label14.Text = "PROFESION:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(6, 60);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(267, 23);
+            comboBox1.TabIndex = 26;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 39);
+            label13.Name = "label13";
+            label13.Size = new Size(55, 15);
+            label13.TabIndex = 24;
+            label13.Text = "GENERO:";
             // 
             // dateTimePicker4
             // 
@@ -179,12 +213,12 @@
             textBox5.Size = new Size(268, 23);
             textBox5.TabIndex = 17;
             // 
-            // textBox4
+            // txtTelefono
             // 
-            textBox4.Location = new Point(5, 352);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(268, 23);
-            textBox4.TabIndex = 16;
+            txtTelefono.Location = new Point(5, 352);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(268, 23);
+            txtTelefono.TabIndex = 16;
             // 
             // label12
             // 
@@ -209,7 +243,7 @@
             label10.AutoSize = true;
             label10.Location = new Point(361, 106);
             label10.Name = "label10";
-            label10.Size = new Size(88, 15);
+            label10.Size = new Size(89, 15);
             label10.TabIndex = 13;
             label10.Text = "FECHA RETIRO:";
             // 
@@ -218,7 +252,7 @@
             label9.AutoSize = true;
             label9.Location = new Point(361, 161);
             label9.Name = "label9";
-            label9.Size = new Size(118, 15);
+            label9.Size = new Size(120, 15);
             label9.TabIndex = 12;
             label9.Text = "MOTIVO DEL RETIRO:";
             // 
@@ -236,7 +270,7 @@
             label7.AutoSize = true;
             label7.Location = new Point(10, 460);
             label7.Name = "label7";
-            label7.Size = new Size(125, 15);
+            label7.Size = new Size(126, 15);
             label7.TabIndex = 10;
             label7.Text = "FECHA DE BAUTISMO:";
             // 
@@ -254,44 +288,44 @@
             label5.AutoSize = true;
             label5.Location = new Point(8, 334);
             label5.Name = "label5";
-            label5.Size = new Size(67, 15);
+            label5.Size = new Size(68, 15);
             label5.TabIndex = 8;
             label5.Text = "TELEFONO:";
             // 
-            // dateTimePicker1
+            // tdFechaNacimiento
             // 
-            dateTimePicker1.Location = new Point(5, 283);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(263, 23);
-            dateTimePicker1.TabIndex = 7;
+            tdFechaNacimiento.Location = new Point(5, 283);
+            tdFechaNacimiento.Name = "tdFechaNacimiento";
+            tdFechaNacimiento.Size = new Size(263, 23);
+            tdFechaNacimiento.TabIndex = 7;
             // 
-            // textBox3
+            // txtDPI
             // 
-            textBox3.Location = new Point(8, 228);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(265, 23);
-            textBox3.TabIndex = 6;
+            txtDPI.Location = new Point(8, 228);
+            txtDPI.Name = "txtDPI";
+            txtDPI.Size = new Size(265, 23);
+            txtDPI.TabIndex = 6;
             // 
-            // textBox2
+            // txtApellidos
             // 
-            textBox2.Location = new Point(5, 169);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(268, 23);
-            textBox2.TabIndex = 5;
+            txtApellidos.Location = new Point(5, 169);
+            txtApellidos.Name = "txtApellidos";
+            txtApellidos.Size = new Size(268, 23);
+            txtApellidos.TabIndex = 5;
             // 
-            // textBox1
+            // txtNombres
             // 
-            textBox1.Location = new Point(5, 114);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(268, 23);
-            textBox1.TabIndex = 4;
+            txtNombres.Location = new Point(5, 114);
+            txtNombres.Name = "txtNombres";
+            txtNombres.Size = new Size(268, 23);
+            txtNombres.TabIndex = 4;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Location = new Point(8, 265);
             label4.Name = "label4";
-            label4.Size = new Size(138, 15);
+            label4.Size = new Size(139, 15);
             label4.TabIndex = 3;
             label4.Text = "FECHA DE NACIMIENTO:";
             // 
@@ -309,7 +343,7 @@
             label2.AutoSize = true;
             label2.Location = new Point(5, 210);
             label2.Name = "label2";
-            label2.Size = new Size(213, 15);
+            label2.Size = new Size(215, 15);
             label2.TabIndex = 1;
             label2.Text = "DOCUMENTO DE IDENTIFICAION (DPI):";
             // 
@@ -350,40 +384,6 @@
             tabPage4.Text = "FAMILIA";
             tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(6, 39);
-            label13.Name = "label13";
-            label13.Size = new Size(55, 15);
-            label13.TabIndex = 24;
-            label13.Text = "GENERO:";
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(6, 60);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(267, 23);
-            comboBox1.TabIndex = 26;
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(357, 491);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(267, 23);
-            comboBox2.TabIndex = 28;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(357, 470);
-            label14.Name = "label14";
-            label14.Size = new Size(72, 15);
-            label14.TabIndex = 27;
-            label14.Text = "PROFESION:";
-            // 
             // frmRegistrar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -412,15 +412,15 @@
         private Label label3;
         private Label label2;
         private Label label1;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private TextBox txtApellidos;
+        private TextBox txtNombres;
         private Label label9;
         private Label label8;
         private Label label7;
         private Label label6;
         private Label label5;
-        private DateTimePicker dateTimePicker1;
-        private TextBox textBox3;
+        private DateTimePicker tdFechaNacimiento;
+        private TextBox txtDPI;
         private Label label12;
         private Label label11;
         private Label label10;
@@ -431,7 +431,7 @@
         private TextBox textBox7;
         private TextBox textBox6;
         private TextBox textBox5;
-        private TextBox textBox4;
+        private TextBox txtTelefono;
         private ComboBox comboBox2;
         private Label label14;
         private ComboBox comboBox1;
