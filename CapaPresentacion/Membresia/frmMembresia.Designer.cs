@@ -63,7 +63,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(1716, 997);
+            btnEliminar.Location = new Point(1727, 1016);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(165, 33);
             btnEliminar.TabIndex = 22;
@@ -149,7 +149,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1464, 746);
+            ClientSize = new Size(1904, 1061);
             Controls.Add(btnNuevo);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);

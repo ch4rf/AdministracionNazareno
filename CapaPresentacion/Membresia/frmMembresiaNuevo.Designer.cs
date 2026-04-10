@@ -31,8 +31,8 @@
             tabMembresia = new TabControl();
             tabPage1 = new TabPage();
             btnNuevo = new Button();
-            btnEditar = new Button();
             button1 = new Button();
+            btnEditar = new Button();
             label4 = new Label();
             comboBox1 = new ComboBox();
             label3 = new Label();
@@ -71,6 +71,7 @@
             label16 = new Label();
             label17 = new Label();
             label18 = new Label();
+            button2 = new Button();
             tabMembresia.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgMiembros).BeginInit();
@@ -91,8 +92,8 @@
             // tabPage1
             // 
             tabPage1.Controls.Add(btnNuevo);
-            tabPage1.Controls.Add(btnEditar);
             tabPage1.Controls.Add(button1);
+            tabPage1.Controls.Add(btnEditar);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(comboBox1);
             tabPage1.Controls.Add(label3);
@@ -118,6 +119,15 @@
             btnNuevo.UseVisualStyleBackColor = true;
             btnNuevo.Click += btnNuevo_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(1067, 581);
+            button1.Name = "button1";
+            button1.Size = new Size(165, 33);
+            button1.TabIndex = 31;
+            button1.Text = "ACTUALIZAR TABLA";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // btnEditar
             // 
             btnEditar.Location = new Point(1069, 632);
@@ -126,15 +136,6 @@
             btnEditar.TabIndex = 32;
             btnEditar.Text = "EDITAR";
             btnEditar.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(1069, 580);
-            button1.Name = "button1";
-            button1.Size = new Size(165, 33);
-            button1.TabIndex = 31;
-            button1.Text = "ACTUALIZAR TABLA";
-            button1.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -496,16 +497,26 @@
             label18.TabIndex = 0;
             label18.Text = "NOMBRES:";
             // 
+            // button2
+            // 
+            button2.Location = new Point(1782, 1006);
+            button2.Name = "button2";
+            button2.Size = new Size(110, 43);
+            button2.TabIndex = 1;
+            button2.Text = "Hola Mundo :D";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // frmMembresiaNuevo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1456, 771);
+            AutoScroll = true;
+            ClientSize = new Size(1234, 611);
+            Controls.Add(button2);
             Controls.Add(tabMembresia);
             Name = "frmMembresiaNuevo";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmMembresiaNuevo";
-            WindowState = FormWindowState.Maximized;
             Load += frmMembresiaNuevo_Load;
             tabMembresia.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -562,5 +573,6 @@
         private Label label17;
         private Label label18;
         private Label label19;
+        private Button button2;
     }
 }
