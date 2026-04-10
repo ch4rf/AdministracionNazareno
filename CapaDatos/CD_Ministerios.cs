@@ -8,35 +8,45 @@ namespace CapaDatos
 {
     public class CD_Ministerios
     {
-        private string cadenaConexion = "Server=DESKTOP-2H6A21O;Database=BDNazareno;Integrated Security=true;";
+        
 
         public DataTable MostrarMinisterios()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("sp_MostrarCatalogosMinisterios", conexion);
-                    cmd.CommandType = CommandType.StoredProcedure;
+            SqlConnection conexion = new SqlConnection();
 
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
-                }
-                catch (Exception ex)
+            //Primero debemos conectarnos al método getInstancia para activar el string de conexión
+            
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
+                SqlCommand cmd = new SqlCommand("sp_MostrarCatalogosMinisterios", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                conexion.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex)
                 {
                     throw new Exception("Error al cargar los ministerios: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+       
             }
-            return dt;
+            
+            
         }
 
         public void InsertarMinisterio(string nombre)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
+            SqlConnection conexion = new SqlConnection();
+
                 try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion();
                     SqlCommand cmd = new SqlCommand("sp_InsertarMinisterio", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Nombre", nombre);
@@ -48,15 +58,20 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al insertar el ministerio: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
         }
 
         public void EditarMinisterio(int idMinisterio, string nombre)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion();
                     SqlCommand cmd = new SqlCommand("sp_EditarMinisterio", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdMinisterio", idMinisterio);
@@ -69,15 +84,20 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al actualizar el ministerio: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
         }
 
         public void EliminarMinisterio(int idMinisterio)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion();
                     SqlCommand cmd = new SqlCommand("sp_EliminarMinisterio", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdMinisterio", idMinisterio);
@@ -85,7 +105,7 @@ namespace CapaDatos
                     conexion.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (SqlException ex)
+            catch (SqlException ex)
                 {
                     // Protección anti-colapsos: Error 547
                     if (ex.Number == 547)
@@ -97,7 +117,12 @@ namespace CapaDatos
                         throw new Exception("Error de base de datos: " + ex.Message);
                     }
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
         }
     }
 }

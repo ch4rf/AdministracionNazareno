@@ -8,35 +8,39 @@ namespace CapaDatos
 {
     public class CD_TiposRecepcion
     {
-        private string cadenaConexion = "Server=DESKTOP-2H6A21O;Database=BDNazareno;Integrated Security=true;";
-
+       
         public DataTable MostrarTiposRecepcion()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_MostrarTiposRecepcion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    conexion.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error al cargar los tipos de recepción: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
             return dt;
         }
 
         public void InsertarTipoRecepcion(string descripcion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_InsertarTipoRecepcion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Descripcion", descripcion);
@@ -48,15 +52,21 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al insertar el tipo de recepción: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
         }
 
         public void EditarTipoRecepcion(int idRecepcion, string descripcion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_EditarTipoRecepcion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdRecepcion", idRecepcion);
@@ -69,15 +79,20 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al actualizar el tipo de recepción: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
         }
 
         public void EliminarTipoRecepcion(int idRecepcion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_EliminarTipoRecepcion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdRecepcion", idRecepcion);
@@ -97,7 +112,14 @@ namespace CapaDatos
                         throw new Exception("Error de base de datos: " + ex.Message);
                     }
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
         }
+            
+
+        }
     }
-}
+

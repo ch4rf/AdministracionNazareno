@@ -8,20 +8,20 @@ namespace CapaDatos
 {
     public class CD_Profesiones
     {
-        private string cadenaConexion = "Server=DESKTOP-2H6A21O;Database=BDNazareno;Integrated Security=true;";
+       
         
         
         // METODO PARA MOTRARAR PROFESIONES
         public DataTable ListarProfesiones()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_MostrarProfesiones", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
-
+                    conexion.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt); // Esto abre y cierra la conexión automáticamente
                 }
@@ -29,6 +29,10 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al cargar la lista de profesiones: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
             return dt;
         }
@@ -36,10 +40,10 @@ namespace CapaDatos
         // METODO PARA INSERTAR PROFESIONES
         public void InsertarProfesion(string descripcion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar el string de conexión
                     SqlCommand cmd = new SqlCommand("sp_InsertarProfesion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -54,16 +58,20 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al insertar la profesión: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
         }
 
         // MÉTODO PARA EDITAR
         public void EditarProfesion(int idProfesion, string descripcion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar 
                     SqlCommand cmd = new SqlCommand("sp_EditarProfesion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -78,6 +86,10 @@ namespace CapaDatos
                 {
                     throw new Exception("Error al actualizar la profesión: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
         }
 
@@ -85,10 +97,10 @@ namespace CapaDatos
 
         public void EliminarProfesion(int idProfesion)
         {
-            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-            {
-                try
+            SqlConnection conexion = new SqlConnection();
+            try
                 {
+                    conexion = CD_Conexiones.getInstancia().CrearConexion(); //Conectamos a getInstancia para activar 
                     SqlCommand cmd = new SqlCommand("sp_EliminarProfesion", conexion);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -115,7 +127,13 @@ namespace CapaDatos
                     // Errores generales de C#
                     throw new Exception("Ocurrió un error inesperado: " + ex.Message);
                 }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+
             }
+
+        }
         }
     }
-}
+
