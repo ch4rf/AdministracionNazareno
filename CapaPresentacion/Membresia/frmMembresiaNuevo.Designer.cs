@@ -41,19 +41,31 @@
             dgMiembros = new DataGridView();
             label1 = new Label();
             tabopage2 = new TabPage();
+            btnLimpiar = new Button();
+            btnGuardar = new Button();
             groupBox1 = new GroupBox();
+            label24 = new Label();
+            cmbAsentamiento = new ComboBox();
+            cmbTipoRecepcion = new ComboBox();
+            cmbRolFamiliar = new ComboBox();
+            label23 = new Label();
+            label22 = new Label();
+            dtpFechaRecepcion = new DateTimePicker();
+            label21 = new Label();
+            cmbEstado = new ComboBox();
+            cmbMotivoRetiro = new ComboBox();
+            cmbFamilia = new ComboBox();
+            label20 = new Label();
             label19 = new Label();
-            comboBox2 = new ComboBox();
+            cmbProfesion = new ComboBox();
             label14 = new Label();
-            comboBox3 = new ComboBox();
+            cmbGenero = new ComboBox();
             label13 = new Label();
-            dateTimePicker4 = new DateTimePicker();
-            dateTimePicker3 = new DateTimePicker();
-            dateTimePicker2 = new DateTimePicker();
-            textBox8 = new TextBox();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
+            dtpFechaRetiro = new DateTimePicker();
+            dtpFechaBautismo = new DateTimePicker();
+            txtReferenciaCasa = new TextBox();
+            txtCalleAvenida = new TextBox();
+            txtCorreo = new TextBox();
             txtTelefono = new TextBox();
             label12 = new Label();
             label11 = new Label();
@@ -63,7 +75,7 @@
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
-            dtFechaNacimiento = new DateTimePicker();
+            dtpFechaNacimiento = new DateTimePicker();
             txtDPI = new TextBox();
             txtApellidos = new TextBox();
             txtNombre = new TextBox();
@@ -197,7 +209,6 @@
             dgMiembros.ReadOnly = true;
             dgMiembros.Size = new Size(1147, 420);
             dgMiembros.TabIndex = 25;
-            dgMiembros.CellContentDoubleClick += dgMiembros_CellContentDoubleClick;
             dgMiembros.CellDoubleClick += dgMiembros_CellDoubleClick;
             // 
             // label1
@@ -212,6 +223,8 @@
             // 
             // tabopage2
             // 
+            tabopage2.Controls.Add(btnLimpiar);
+            tabopage2.Controls.Add(btnGuardar);
             tabopage2.Controls.Add(groupBox1);
             tabopage2.Location = new Point(4, 24);
             tabopage2.Name = "tabopage2";
@@ -221,20 +234,49 @@
             tabopage2.Text = "REGISTRAR";
             tabopage2.UseVisualStyleBackColor = true;
             // 
+            // btnLimpiar
+            // 
+            btnLimpiar.Location = new Point(1114, 188);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(75, 23);
+            btnLimpiar.TabIndex = 3;
+            btnLimpiar.Text = "limpiar";
+            btnLimpiar.UseVisualStyleBackColor = true;
+            // 
+            // btnGuardar
+            // 
+            btnGuardar.Location = new Point(1114, 132);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(75, 23);
+            btnGuardar.TabIndex = 2;
+            btnGuardar.Text = "guardar";
+            btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
+            // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label24);
+            groupBox1.Controls.Add(cmbAsentamiento);
+            groupBox1.Controls.Add(cmbTipoRecepcion);
+            groupBox1.Controls.Add(cmbRolFamiliar);
+            groupBox1.Controls.Add(label23);
+            groupBox1.Controls.Add(label22);
+            groupBox1.Controls.Add(dtpFechaRecepcion);
+            groupBox1.Controls.Add(label21);
+            groupBox1.Controls.Add(cmbEstado);
+            groupBox1.Controls.Add(cmbMotivoRetiro);
+            groupBox1.Controls.Add(cmbFamilia);
+            groupBox1.Controls.Add(label20);
             groupBox1.Controls.Add(label19);
-            groupBox1.Controls.Add(comboBox2);
+            groupBox1.Controls.Add(cmbProfesion);
             groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(comboBox3);
+            groupBox1.Controls.Add(cmbGenero);
             groupBox1.Controls.Add(label13);
-            groupBox1.Controls.Add(dateTimePicker4);
-            groupBox1.Controls.Add(dateTimePicker3);
-            groupBox1.Controls.Add(dateTimePicker2);
-            groupBox1.Controls.Add(textBox8);
-            groupBox1.Controls.Add(textBox7);
-            groupBox1.Controls.Add(textBox6);
-            groupBox1.Controls.Add(textBox5);
+            groupBox1.Controls.Add(dtpFechaRetiro);
+            groupBox1.Controls.Add(dtpFechaBautismo);
+            groupBox1.Controls.Add(txtReferenciaCasa);
+            groupBox1.Controls.Add(txtCalleAvenida);
+            groupBox1.Controls.Add(txtCorreo);
             groupBox1.Controls.Add(txtTelefono);
             groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(label11);
@@ -244,7 +286,7 @@
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(dtFechaNacimiento);
+            groupBox1.Controls.Add(dtpFechaNacimiento);
             groupBox1.Controls.Add(txtDPI);
             groupBox1.Controls.Add(txtApellidos);
             groupBox1.Controls.Add(txtNombre);
@@ -254,10 +296,112 @@
             groupBox1.Controls.Add(label18);
             groupBox1.Location = new Point(48, 19);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(911, 598);
+            groupBox1.Size = new Size(965, 598);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "INFORMACION DE IDENTIDAD";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(646, 320);
+            label24.Name = "label24";
+            label24.Size = new Size(79, 15);
+            label24.TabIndex = 42;
+            label24.Text = "asentamiento";
+            // 
+            // cmbAsentamiento
+            // 
+            cmbAsentamiento.FormattingEnabled = true;
+            cmbAsentamiento.Location = new Point(644, 341);
+            cmbAsentamiento.Name = "cmbAsentamiento";
+            cmbAsentamiento.Size = new Size(267, 23);
+            cmbAsentamiento.TabIndex = 41;
+            // 
+            // cmbTipoRecepcion
+            // 
+            cmbTipoRecepcion.FormattingEnabled = true;
+            cmbTipoRecepcion.Location = new Point(357, 124);
+            cmbTipoRecepcion.Name = "cmbTipoRecepcion";
+            cmbTipoRecepcion.Size = new Size(267, 23);
+            cmbTipoRecepcion.TabIndex = 40;
+            // 
+            // cmbRolFamiliar
+            // 
+            cmbRolFamiliar.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbRolFamiliar.FormattingEnabled = true;
+            cmbRolFamiliar.Items.AddRange(new object[] { "Padre", "", "", "Madre", "", "", "Hijo", "", "", "Hija", "", "", "Abuelo", "", "", "Abuela", "", "", "Tío/a", "", "", "Otro" });
+            cmbRolFamiliar.Location = new Point(0, 341);
+            cmbRolFamiliar.Name = "cmbRolFamiliar";
+            cmbRolFamiliar.Size = new Size(267, 23);
+            cmbRolFamiliar.TabIndex = 39;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(0, 320);
+            label23.Name = "label23";
+            label23.Size = new Size(86, 15);
+            label23.TabIndex = 38;
+            label23.Text = "ROL FAMILIAR:";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(357, 106);
+            label22.Name = "label22";
+            label22.Size = new Size(101, 15);
+            label22.TabIndex = 37;
+            label22.Text = "TIPO RECEPCION:";
+            // 
+            // dtpFechaRecepcion
+            // 
+            dtpFechaRecepcion.Location = new Point(357, 60);
+            dtpFechaRecepcion.Name = "dtpFechaRecepcion";
+            dtpFechaRecepcion.Size = new Size(263, 23);
+            dtpFechaRecepcion.TabIndex = 36;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(644, 226);
+            label21.Name = "label21";
+            label21.Size = new Size(52, 15);
+            label21.TabIndex = 35;
+            label21.Text = "ESTADO:";
+            // 
+            // cmbEstado
+            // 
+            cmbEstado.FormattingEnabled = true;
+            cmbEstado.Location = new Point(644, 244);
+            cmbEstado.Name = "cmbEstado";
+            cmbEstado.Size = new Size(267, 23);
+            cmbEstado.TabIndex = 34;
+            // 
+            // cmbMotivoRetiro
+            // 
+            cmbMotivoRetiro.FormattingEnabled = true;
+            cmbMotivoRetiro.Location = new Point(357, 228);
+            cmbMotivoRetiro.Name = "cmbMotivoRetiro";
+            cmbMotivoRetiro.Size = new Size(267, 23);
+            cmbMotivoRetiro.TabIndex = 32;
+            // 
+            // cmbFamilia
+            // 
+            cmbFamilia.FormattingEnabled = true;
+            cmbFamilia.Location = new Point(644, 106);
+            cmbFamilia.Name = "cmbFamilia";
+            cmbFamilia.Size = new Size(267, 23);
+            cmbFamilia.TabIndex = 31;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(644, 85);
+            label20.Name = "label20";
+            label20.Size = new Size(54, 15);
+            label20.TabIndex = 30;
+            label20.Text = "FAMILIA:";
             // 
             // label19
             // 
@@ -267,15 +411,14 @@
             label19.Size = new Size(197, 15);
             label19.TabIndex = 29;
             label19.Text = "* Indica que el campo es obligatorio";
-            label19.Click += label19_Click;
             // 
-            // comboBox2
+            // cmbProfesion
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(357, 491);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(267, 23);
-            comboBox2.TabIndex = 28;
+            cmbProfesion.FormattingEnabled = true;
+            cmbProfesion.Location = new Point(357, 491);
+            cmbProfesion.Name = "cmbProfesion";
+            cmbProfesion.Size = new Size(267, 23);
+            cmbProfesion.TabIndex = 28;
             // 
             // label14
             // 
@@ -286,13 +429,14 @@
             label14.TabIndex = 27;
             label14.Text = "PROFESION:";
             // 
-            // comboBox3
+            // cmbGenero
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(6, 60);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(267, 23);
-            comboBox3.TabIndex = 26;
+            cmbGenero.FormattingEnabled = true;
+            cmbGenero.Items.AddRange(new object[] { "MASCULINO", "FEMENINO" });
+            cmbGenero.Location = new Point(6, 60);
+            cmbGenero.Name = "cmbGenero";
+            cmbGenero.Size = new Size(267, 23);
+            cmbGenero.TabIndex = 26;
             // 
             // label13
             // 
@@ -303,60 +447,45 @@
             label13.TabIndex = 24;
             label13.Text = "GENERO:";
             // 
-            // dateTimePicker4
+            // dtpFechaRetiro
             // 
-            dateTimePicker4.Location = new Point(361, 124);
-            dateTimePicker4.Name = "dateTimePicker4";
-            dateTimePicker4.Size = new Size(263, 23);
-            dateTimePicker4.TabIndex = 23;
+            dtpFechaRetiro.Location = new Point(357, 184);
+            dtpFechaRetiro.Name = "dtpFechaRetiro";
+            dtpFechaRetiro.Size = new Size(263, 23);
+            dtpFechaRetiro.TabIndex = 23;
             // 
-            // dateTimePicker3
+            // dtpFechaBautismo
             // 
-            dateTimePicker3.Location = new Point(366, 70);
-            dateTimePicker3.Name = "dateTimePicker3";
-            dateTimePicker3.Size = new Size(263, 23);
-            dateTimePicker3.TabIndex = 22;
+            dtpFechaBautismo.Location = new Point(0, 520);
+            dtpFechaBautismo.Name = "dtpFechaBautismo";
+            dtpFechaBautismo.Size = new Size(263, 23);
+            dtpFechaBautismo.TabIndex = 21;
             // 
-            // dateTimePicker2
+            // txtReferenciaCasa
             // 
-            dateTimePicker2.Location = new Point(2, 488);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(263, 23);
-            dateTimePicker2.TabIndex = 21;
+            txtReferenciaCasa.Location = new Point(361, 362);
+            txtReferenciaCasa.Multiline = true;
+            txtReferenciaCasa.Name = "txtReferenciaCasa";
+            txtReferenciaCasa.Size = new Size(268, 87);
+            txtReferenciaCasa.TabIndex = 20;
             // 
-            // textBox8
+            // txtCalleAvenida
             // 
-            textBox8.Location = new Point(361, 362);
-            textBox8.Multiline = true;
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(268, 87);
-            textBox8.TabIndex = 20;
+            txtCalleAvenida.Location = new Point(361, 296);
+            txtCalleAvenida.Name = "txtCalleAvenida";
+            txtCalleAvenida.Size = new Size(268, 23);
+            txtCalleAvenida.TabIndex = 19;
             // 
-            // textBox7
+            // txtCorreo
             // 
-            textBox7.Location = new Point(361, 296);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(268, 23);
-            textBox7.TabIndex = 19;
-            // 
-            // textBox6
-            // 
-            textBox6.Location = new Point(361, 183);
-            textBox6.Multiline = true;
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(273, 78);
-            textBox6.TabIndex = 18;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(5, 416);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(268, 23);
-            textBox5.TabIndex = 17;
+            txtCorreo.Location = new Point(2, 462);
+            txtCorreo.Name = "txtCorreo";
+            txtCorreo.Size = new Size(268, 23);
+            txtCorreo.TabIndex = 17;
             // 
             // txtTelefono
             // 
-            txtTelefono.Location = new Point(5, 352);
+            txtTelefono.Location = new Point(2, 398);
             txtTelefono.Name = "txtTelefono";
             txtTelefono.Size = new Size(268, 23);
             txtTelefono.TabIndex = 16;
@@ -382,25 +511,25 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(361, 106);
+            label10.Location = new Point(357, 166);
             label10.Name = "label10";
-            label10.Size = new Size(89, 15);
+            label10.Size = new Size(88, 15);
             label10.TabIndex = 13;
             label10.Text = "FECHA RETIRO:";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(361, 161);
+            label9.Location = new Point(352, 210);
             label9.Name = "label9";
-            label9.Size = new Size(120, 15);
+            label9.Size = new Size(118, 15);
             label9.TabIndex = 12;
             label9.Text = "MOTIVO DEL RETIRO:";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(369, 39);
+            label8.Location = new Point(361, 39);
             label8.Name = "label8";
             label8.Size = new Size(130, 15);
             label8.TabIndex = 11;
@@ -409,16 +538,16 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(10, 460);
+            label7.Location = new Point(0, 494);
             label7.Name = "label7";
-            label7.Size = new Size(126, 15);
+            label7.Size = new Size(125, 15);
             label7.TabIndex = 10;
             label7.Text = "FECHA DE BAUTISMO:";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(10, 398);
+            label6.Location = new Point(7, 444);
             label6.Name = "label6";
             label6.Size = new Size(56, 15);
             label6.TabIndex = 9;
@@ -427,18 +556,18 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(8, 334);
+            label5.Location = new Point(5, 380);
             label5.Name = "label5";
-            label5.Size = new Size(68, 15);
+            label5.Size = new Size(67, 15);
             label5.TabIndex = 8;
             label5.Text = "TELEFONO:";
             // 
-            // dtFechaNacimiento
+            // dtpFechaNacimiento
             // 
-            dtFechaNacimiento.Location = new Point(5, 283);
-            dtFechaNacimiento.Name = "dtFechaNacimiento";
-            dtFechaNacimiento.Size = new Size(263, 23);
-            dtFechaNacimiento.TabIndex = 7;
+            dtpFechaNacimiento.Location = new Point(5, 283);
+            dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            dtpFechaNacimiento.Size = new Size(263, 23);
+            dtpFechaNacimiento.TabIndex = 7;
             // 
             // txtDPI
             // 
@@ -466,7 +595,7 @@
             label15.AutoSize = true;
             label15.Location = new Point(8, 265);
             label15.Name = "label15";
-            label15.Size = new Size(139, 15);
+            label15.Size = new Size(138, 15);
             label15.TabIndex = 3;
             label15.Text = "FECHA DE NACIMIENTO:";
             // 
@@ -484,7 +613,7 @@
             label17.AutoSize = true;
             label17.Location = new Point(5, 210);
             label17.Name = "label17";
-            label17.Size = new Size(215, 15);
+            label17.Size = new Size(213, 15);
             label17.TabIndex = 1;
             label17.Text = "DOCUMENTO DE IDENTIFICAION (DPI):";
             // 
@@ -511,7 +640,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1234, 611);
+            ClientSize = new Size(1353, 633);
             Controls.Add(button2);
             Controls.Add(tabMembresia);
             Name = "frmMembresiaNuevo";
@@ -544,17 +673,15 @@
         private DataGridView dgMiembros;
         private Label label1;
         private GroupBox groupBox1;
-        private ComboBox comboBox2;
+        private ComboBox cmbProfesion;
         private Label label14;
-        private ComboBox comboBox3;
+        private ComboBox cmbGenero;
         private Label label13;
-        private DateTimePicker dateTimePicker4;
-        private DateTimePicker dateTimePicker3;
-        private DateTimePicker dateTimePicker2;
-        private TextBox textBox8;
-        private TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
+        private DateTimePicker dtpFechaRetiro;
+        private DateTimePicker dtpFechaBautismo;
+        private TextBox txtReferenciaCasa;
+        private TextBox txtCalleAvenida;
+        private TextBox txtCorreo;
         private TextBox txtTelefono;
         private Label label12;
         private Label label11;
@@ -564,7 +691,7 @@
         private Label label7;
         private Label label6;
         private Label label5;
-        private DateTimePicker dtFechaNacimiento;
+        private DateTimePicker dtpFechaNacimiento;
         private TextBox txtDPI;
         private TextBox txtApellidos;
         private TextBox txtNombre;
@@ -574,5 +701,19 @@
         private Label label18;
         private Label label19;
         private Button button2;
+        private ComboBox cmbFamilia;
+        private Label label20;
+        private ComboBox cmbMotivoRetiro;
+        private Label label21;
+        private ComboBox cmbEstado;
+        private ComboBox cmbRolFamiliar;
+        private Label label23;
+        private Label label22;
+        private DateTimePicker dtpFechaRecepcion;
+        private ComboBox cmbTipoRecepcion;
+        private Button btnLimpiar;
+        private Button btnGuardar;
+        private ComboBox cmbAsentamiento;
+        private Label label24;
     }
 }

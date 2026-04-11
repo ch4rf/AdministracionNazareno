@@ -10,22 +10,24 @@ namespace CapaNegocio
     {
         private CD_Miembros objDatos = new CD_Miembros();
 
-        // metodo para mostrar los miembros
-        public DataTable MostrarMiembros()
+        public DataTable MostrarMiembros() { return objDatos.ListarMiembros(); }
+        public DataTable MostrarMinisterios() { return objDatos.ListarMinisterios(); }
+        public DataTable MostrarMiembrosPorMinisterio(int id) { return objDatos.ListarMiembrosPorMinisterio(id); }
+
+        // --- NUEVOS MÉTODOS ---
+        public DataTable BuscarMiembroPorID(int idMiembro)
         {
-            return objDatos.ListarMiembros();
+            return objDatos.BuscarMiembroPorID(idMiembro);
         }
 
-        // metodo para mostrar los ministerios
-        public DataTable MostrarMinisterios()
+        public void InsertarMiembro(int idFamilia, string rolFamiliar, string dpi, string nombres, string apellidos, int idGenero, DateTime? fechaNacimiento, int idProfesion, string telefono, string correo, DateTime? fechaBautismo, DateTime? fechaRecepcion, int idRecepcion, int idEstado, int idMotivoRetiro, DateTime? fechaRetiro, int idAsentamiento, string calleAvenida, string referenciaCasa)
         {
-            return objDatos.ListarMinisterios();
+            objDatos.InsertarMiembro(idFamilia, rolFamiliar, dpi, nombres, apellidos, idGenero, fechaNacimiento, idProfesion, telefono, correo, fechaBautismo, fechaRecepcion, idRecepcion, idEstado, idMotivoRetiro, fechaRetiro, idAsentamiento, calleAvenida, referenciaCasa);
         }
 
-        // metodo para mostrar los miembros por ministerio
-        public DataTable MostrarMiembrosPorMinisterio(int idMinisterio)
+        public void EditarMiembro(int idMiembro, int idFamilia, string rolFamiliar, string dpi, string nombres, string apellidos, int idGenero, DateTime? fechaNacimiento, int idProfesion, string telefono, string correo, DateTime? fechaBautismo, DateTime? fechaRecepcion, int idRecepcion, int idEstado, int idMotivoRetiro, DateTime? fechaRetiro, int idAsentamiento, string calleAvenida, string referenciaCasa)
         {
-            return objDatos.ListarMiembrosPorMinisterio(idMinisterio);
+            objDatos.EditarMiembro(idMiembro, idFamilia, rolFamiliar, dpi, nombres, apellidos, idGenero, fechaNacimiento, idProfesion, telefono, correo, fechaBautismo, fechaRecepcion, idRecepcion, idEstado, idMotivoRetiro, fechaRetiro, idAsentamiento, calleAvenida, referenciaCasa);
         }
     }
 }
