@@ -137,15 +137,17 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // 1. VALIDACIÓN BÁSICA: Asegurarnos de que no dejen en blanco el nombre o apellido
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtApellidos.Text))
             {
                 MessageBox.Show("Nombres y Apellidos son obligatorios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return; // Detiene la ejecución aquí mismo si faltan datos
             }
 
             try
             {
-                // Extraer IDs de los Combos
+                // 2. EXTRAER IDs DE LOS COMBOBOXES
+                // Si el usuario seleccionó algo (SelectedIndex > -1), sacamos el número. Si no, mandamos un 0.
                 int idGen = cmbGenero.SelectedIndex > -1 ? Convert.ToInt32(cmbGenero.SelectedValue) : 0;
                 int idProf = cmbProfesion.SelectedIndex > -1 ? Convert.ToInt32(cmbProfesion.SelectedValue) : 0;
                 int idFam = cmbFamilia.SelectedIndex > -1 ? Convert.ToInt32(cmbFamilia.SelectedValue) : 0;
@@ -154,28 +156,47 @@ namespace CapaPresentacion.Membresia
                 int idMot = cmbMotivoRetiro.SelectedIndex > -1 ? Convert.ToInt32(cmbMotivoRetiro.SelectedValue) : 0;
                 int idAse = cmbAsentamiento.SelectedIndex > -1 ? Convert.ToInt32(cmbAsentamiento.SelectedValue) : 0;
 
+                // Extraer el texto del Rol Familiar (Como este no usa ID, guardamos el texto directo)
                 string rol = cmbRolFamiliar.Text;
 
+                // 3. DECIDIR EL MODO: ¿Es un registro nuevo o estamos editando?
                 if (idMiembroSeleccionado == 0)
                 {
-                    // INSERTAR (19 Parámetros)
-                    objMiembros.InsertarMiembro(idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text, idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text, txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value, idRec, idEst, idMot, dtpFechaRetiro.Value, idAse, txtCalleAvenida.Text, txtReferenciaCasa.Text);
-                    MessageBox.Show("Miembro registrado con éxito.");
+                    // MODO INSERTAR (Enviamos los 19 Parámetros a la Capa de Negocio)
+                    objMiembros.InsertarMiembro(
+                        idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
+                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
+                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
+                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        txtCalleAvenida.Text, txtReferenciaCasa.Text
+                    );
+
+                    MessageBox.Show("¡Miembro registrado con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // EDITAR (20 Parámetros incluyendo el ID)
-                    objMiembros.EditarMiembro(idMiembroSeleccionado, idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text, idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text, txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value, idRec, idEst, idMot, dtpFechaRetiro.Value, idAse, txtCalleAvenida.Text, txtReferenciaCasa.Text);
-                    MessageBox.Show("Datos actualizados con éxito.");
+                    // MODO EDITAR (Enviamos 20 Parámetros, ¡el primero es el ID para saber a quién actualizar!)
+                    objMiembros.EditarMiembro(
+                        idMiembroSeleccionado, // <- El ID que atrapamos en el doble clic
+                        idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
+                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
+                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
+                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        txtCalleAvenida.Text, txtReferenciaCasa.Text
+                    );
+
+                    MessageBox.Show("¡Datos actualizados con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                LimpiarFormulario();
-                CargarGrilla();
-                tabMembresia.SelectedIndex = 0; // Regresar a la tabla
+                // 4. ACCIONES FINALES POST-GUARDADO
+                LimpiarFormulario();            // Limpia todas las cajas de texto y combos
+                CargarGrilla();                 // Actualiza la tabla (DataGridView) para mostrar los cambios
+                tabMembresia.SelectedIndex = 0; // Cambia la vista de regreso a la pestaña de la tabla
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar: " + ex.Message);
+                // Si ocurre un error a nivel de Base de Datos o conexión, lo mostramos aquí
+                MessageBox.Show("Ocurrió un error al guardar: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -210,6 +231,11 @@ namespace CapaPresentacion.Membresia
             dtpFechaBautismo.Value = DateTime.Now;
             dtpFechaRecepcion.Value = DateTime.Now;
             dtpFechaRetiro.Value = DateTime.Now;
+        }
+
+        private void dgMiembros_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

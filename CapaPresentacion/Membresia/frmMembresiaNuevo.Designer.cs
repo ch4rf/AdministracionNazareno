@@ -209,6 +209,7 @@
             dgMiembros.ReadOnly = true;
             dgMiembros.Size = new Size(1147, 420);
             dgMiembros.TabIndex = 25;
+            dgMiembros.CellContentClick += dgMiembros_CellContentClick;
             dgMiembros.CellDoubleClick += dgMiembros_CellDoubleClick;
             // 
             // label1

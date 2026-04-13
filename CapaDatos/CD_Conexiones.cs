@@ -20,8 +20,8 @@ namespace CapaDatos
         private CD_Conexiones()
         {
             //Inicializamos nuestras variables privadas
-            this.Base = "BDNazareno";
-            this.servidor = "DESKTOP-2H6A21O";
+            this.Base = "BD_IGLESIA";
+            this.servidor = "(localdb)\\MSSQLLocalDB";
             this.seguridad = true;
         }
 
