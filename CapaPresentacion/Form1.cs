@@ -1,3 +1,4 @@
+using CapaPresentacion.Familias;
 using CapaPresentacion.Mantenimiento;
 using CapaPresentacion.Membresia;
 
@@ -39,9 +40,9 @@ namespace CapaPresentacion
 
         private void gestionFamiliaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmGestionFamilias frm = new frmGestionFamilias();
-            frm.MdiParent = this;
-            frm.Show();
+            frmGestionFamilias frmFamilia = new frmGestionFamilias();
+            frmFamilia.MdiParent = this;
+            frmFamilia.Show();
         }
 
         private void verMinisteriosToolStripMenuItem_Click(object sender, EventArgs e)

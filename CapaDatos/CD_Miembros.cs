@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CapaDatos
 {
@@ -222,6 +220,85 @@ namespace CapaDatos
                 if (conexion.State == ConnectionState.Open) conexion.Close();
             }
 
+            return dt;
+        }
+
+
+        // Hecho por adami de aqui para abajo
+        // ====================================================================
+        // 6. BUSCAR MIEMBROS SIN FAMILIA POR APELLIDO
+        // ====================================================================
+        public DataTable BuscarMiembrosHuerfanos(string ape1, string ape2, string nombre)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("sp_BuscarMiembrosHuerfanos", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@apellido1", ape1);
+                cmd.Parameters.AddWithValue("@apellido2", ape2);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+            return dt;
+        }
+
+        // ====================================================================
+        // 7. ASIGNAR MIEMBRO A UNA FAMILIA (El "Clavo" final)
+        // ====================================================================
+        public void AsignarFamilia(int idMiembro, int idFamilia)
+        {
+            SqlConnection conexion = new SqlConnection();
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                // Haremos un UPDATE directo o podés crear un SP llamado sp_AsignarFamilia
+                string query = "UPDATE MIEMBROS SET ID_Familia = @idFam WHERE ID_Miembro = @idMiem";
+                SqlCommand cmd = new SqlCommand(query, conexion);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@idFam", idFamilia);
+                cmd.Parameters.AddWithValue("@idMiem", idMiembro);
+
+                conexion.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al asignar la familia al miembro: " + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+        }
+        public DataTable ListarMiembrosPorFamilia(int idFam)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                // Usamos el SP que creamos antes
+                SqlCommand cmd = new SqlCommand("sp_MiembrosPorFamilia", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idfamilia", idFam);
+
+                conexion.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar miembros de la familia: " + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
             return dt;
         }
     }
