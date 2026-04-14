@@ -100,23 +100,26 @@ namespace CapaDatos
 
         //INSERTAR
         public void InsertarActividad(int idMinisterio, int idTipo,
-           DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin,
-           int idLugar, int? idAnfitrion)
+            DateTime fecha, int? idTipoDuracion,
+            TimeSpan? horaInicio, TimeSpan? horaFin,
+            int idLugar, int? idAnfitrion)
         {
             using (SqlConnection cn = CrearConexion())
             using (SqlCommand cmd = new SqlCommand("sp_InsertarActividad", cn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@IdMinisterio", idMinisterio);
                 cmd.Parameters.AddWithValue("@IdTipo", idTipo);
                 cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
-                cmd.Parameters.AddWithValue("@HoraInicio", horaInicio);
-                cmd.Parameters.AddWithValue("@HoraFin", horaFin);
+                cmd.Parameters.AddWithValue("@IdTipoDuracion",
+                    idTipoDuracion.HasValue ? (object)idTipoDuracion.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@HoraInicio",
+                    horaInicio.HasValue ? (object)horaInicio.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@HoraFin",
+                    horaFin.HasValue ? (object)horaFin.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@IdLugar", idLugar);
                 cmd.Parameters.AddWithValue("@IdAnfitrion",
                     idAnfitrion.HasValue ? (object)idAnfitrion.Value : DBNull.Value);
-
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -124,24 +127,27 @@ namespace CapaDatos
 
         //EDITAR
         public void EditarActividad(int idActividad, int idMinisterio, int idTipo,
-            DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin,
+            DateTime fecha, int? idTipoDuracion,
+            TimeSpan? horaInicio, TimeSpan? horaFin,
             int idLugar, int? idAnfitrion)
         {
             using (SqlConnection cn = CrearConexion())
             using (SqlCommand cmd = new SqlCommand("sp_EditarActividad", cn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@IdActividad", idActividad);
                 cmd.Parameters.AddWithValue("@IdMinisterio", idMinisterio);
                 cmd.Parameters.AddWithValue("@IdTipo", idTipo);
                 cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
-                cmd.Parameters.AddWithValue("@HoraInicio", horaInicio);
-                cmd.Parameters.AddWithValue("@HoraFin", horaFin);
+                cmd.Parameters.AddWithValue("@IdTipoDuracion",
+                    idTipoDuracion.HasValue ? (object)idTipoDuracion.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@HoraInicio",
+                    horaInicio.HasValue ? (object)horaInicio.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@HoraFin",
+                    horaFin.HasValue ? (object)horaFin.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@IdLugar", idLugar);
                 cmd.Parameters.AddWithValue("@IdAnfitrion",
                     idAnfitrion.HasValue ? (object)idAnfitrion.Value : DBNull.Value);
-
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -228,6 +234,20 @@ namespace CapaDatos
             }
         }
 
+        public DataTable MostrarTiposDuracion()
+        {
+            using (SqlConnection cn = CrearConexion())
+            using (SqlCommand cmd = new SqlCommand("sp_MostrarTiposDuracion", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+
         public void InsertarLugar(string nombre)
         {
             using (SqlConnection cn = CrearConexion())
@@ -260,6 +280,46 @@ namespace CapaDatos
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdLugar", idLugar);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+        public void InsertarTipoDuracion(string descripcion, bool requiereHora)
+        {
+            using (SqlConnection cn = CrearConexion())
+            using (SqlCommand cmd = new SqlCommand("sp_InsertarTipoDuracion", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                cmd.Parameters.AddWithValue("@RequiereHora", requiereHora);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void EditarTipoDuracion(int id, string descripcion, bool requiereHora)
+        {
+            using (SqlConnection cn = CrearConexion())
+            using (SqlCommand cmd = new SqlCommand("sp_EditarTipoDuracion", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdTipoDuracion", id);
+                cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                cmd.Parameters.AddWithValue("@RequiereHora", requiereHora);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void EliminarTipoDuracion(int id)
+        {
+            using (SqlConnection cn = CrearConexion())
+            using (SqlCommand cmd = new SqlCommand("sp_EliminarTipoDuracion", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdTipoDuracion", id);
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }

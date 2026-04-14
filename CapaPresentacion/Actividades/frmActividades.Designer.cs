@@ -50,6 +50,8 @@
             label3 = new Label();
             cmbAnfitrion = new ComboBox();
             label4 = new Label();
+            cmbHorario = new ComboBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)dg1).BeginInit();
             SuspendLayout();
             // 
@@ -188,14 +190,16 @@
             dg1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dg1.Size = new Size(1626, 452);
             dg1.TabIndex = 14;
+            dg1.CellContentClick += dg1_CellContentClick;
             // 
             // dtpFinalizacion
             // 
-            dtpFinalizacion.CustomFormat = "";
-            dtpFinalizacion.Format = DateTimePickerFormat.Time;
+            dtpFinalizacion.CustomFormat = "HH:mm";
+            dtpFinalizacion.Format = DateTimePickerFormat.Custom;
             dtpFinalizacion.ImeMode = ImeMode.NoControl;
-            dtpFinalizacion.Location = new Point(879, 207);
+            dtpFinalizacion.Location = new Point(1383, 207);
             dtpFinalizacion.Name = "dtpFinalizacion";
+            dtpFinalizacion.ShowUpDown = true;
             dtpFinalizacion.Size = new Size(152, 30);
             dtpFinalizacion.TabIndex = 18;
             dtpFinalizacion.Value = new DateTime(2026, 4, 6, 0, 0, 0, 0);
@@ -203,7 +207,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(876, 169);
+            label1.Location = new Point(1380, 169);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(192, 23);
@@ -212,11 +216,12 @@
             // 
             // dtpInicio
             // 
-            dtpInicio.CustomFormat = "";
-            dtpInicio.Format = DateTimePickerFormat.Time;
+            dtpInicio.CustomFormat = "HH:mm";
+            dtpInicio.Format = DateTimePickerFormat.Custom;
             dtpInicio.ImeMode = ImeMode.NoControl;
-            dtpInicio.Location = new Point(661, 207);
+            dtpInicio.Location = new Point(1165, 207);
             dtpInicio.Name = "dtpInicio";
+            dtpInicio.ShowUpDown = true;
             dtpInicio.Size = new Size(152, 30);
             dtpInicio.TabIndex = 16;
             dtpInicio.Value = new DateTime(2026, 4, 6, 0, 0, 0, 0);
@@ -224,7 +229,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(658, 169);
+            label2.Location = new Point(1162, 169);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(137, 23);
@@ -267,11 +272,32 @@
             label4.TabIndex = 21;
             label4.Text = "Miembro Anfritrión";
             // 
+            // cmbHorario
+            // 
+            cmbHorario.FormattingEnabled = true;
+            cmbHorario.Location = new Point(661, 206);
+            cmbHorario.Name = "cmbHorario";
+            cmbHorario.Size = new Size(370, 31);
+            cmbHorario.TabIndex = 24;
+            cmbHorario.SelectedIndexChanged += cmbHorario_SelectedIndexChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(657, 180);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(74, 23);
+            label5.TabIndex = 23;
+            label5.Text = "Horario";
+            // 
             // frmActividades
             // 
             AutoScaleDimensions = new SizeF(11F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1011);
+            Controls.Add(cmbHorario);
+            Controls.Add(label5);
             Controls.Add(cmbAnfitrion);
             Controls.Add(label4);
             Controls.Add(cmbLugar);
@@ -330,5 +356,7 @@
         private Label label3;
         private ComboBox cmbAnfitrion;
         private Label label4;
+        private ComboBox cmbHorario;
+        private Label label5;
     }
 }

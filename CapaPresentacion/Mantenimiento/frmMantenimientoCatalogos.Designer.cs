@@ -44,10 +44,11 @@
             // cmbCatalogos
             // 
             cmbCatalogos.FormattingEnabled = true;
-            cmbCatalogos.Items.AddRange(new object[] { "Profesiones", "Motivos de Retiro", "Tipos de Recepción", "Ministerios" });
-            cmbCatalogos.Location = new Point(159, 50);
+            cmbCatalogos.Items.AddRange(new object[] { "Profesiones", "Motivos de Retiro", "Tipos de Recepción", "Ministerios", "Tipos de Actividad", "Lugar", "Horario" });
+            cmbCatalogos.Location = new Point(182, 67);
+            cmbCatalogos.Margin = new Padding(3, 4, 3, 4);
             cmbCatalogos.Name = "cmbCatalogos";
-            cmbCatalogos.Size = new Size(184, 23);
+            cmbCatalogos.Size = new Size(210, 28);
             cmbCatalogos.TabIndex = 0;
             cmbCatalogos.SelectedIndexChanged += cmbCatalogos_SelectedIndexChanged;
             // 
@@ -61,9 +62,11 @@
             gbMantenimiento.Controls.Add(label2);
             gbMantenimiento.Controls.Add(label1);
             gbMantenimiento.Controls.Add(cmbCatalogos);
-            gbMantenimiento.Location = new Point(60, 42);
+            gbMantenimiento.Location = new Point(69, 56);
+            gbMantenimiento.Margin = new Padding(3, 4, 3, 4);
             gbMantenimiento.Name = "gbMantenimiento";
-            gbMantenimiento.Size = new Size(509, 610);
+            gbMantenimiento.Padding = new Padding(3, 4, 3, 4);
+            gbMantenimiento.Size = new Size(582, 813);
             gbMantenimiento.TabIndex = 1;
             gbMantenimiento.TabStop = false;
             gbMantenimiento.Text = "Mantenimiento";
@@ -71,18 +74,22 @@
             // dgDatos
             // 
             dgDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgDatos.Location = new Point(32, 172);
+            dgDatos.Location = new Point(37, 229);
+            dgDatos.Margin = new Padding(3, 4, 3, 4);
             dgDatos.Name = "dgDatos";
-            dgDatos.Size = new Size(317, 367);
+            dgDatos.RowHeadersWidth = 51;
+            dgDatos.Size = new Size(362, 489);
             dgDatos.TabIndex = 7;
             dgDatos.CellClick += dgDatos_CellClick;
+            dgDatos.CellContentClick += dgDatos_CellContentClick;
             dgDatos.CellDoubleClick += dgDatos_CellDoubleClick;
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(376, 248);
+            btnEliminar.Location = new Point(430, 331);
+            btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(101, 42);
+            btnEliminar.Size = new Size(115, 56);
             btnEliminar.TabIndex = 6;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -90,9 +97,10 @@
             // 
             // btnLimpiar
             // 
-            btnLimpiar.Location = new Point(355, 91);
+            btnLimpiar.Location = new Point(406, 121);
+            btnLimpiar.Margin = new Padding(3, 4, 3, 4);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(101, 42);
+            btnLimpiar.Size = new Size(115, 56);
             btnLimpiar.TabIndex = 5;
             btnLimpiar.Text = "Limpiar";
             btnLimpiar.UseVisualStyleBackColor = true;
@@ -100,9 +108,10 @@
             // 
             // btnGuardarNuevo
             // 
-            btnGuardarNuevo.Location = new Point(376, 200);
+            btnGuardarNuevo.Location = new Point(430, 267);
+            btnGuardarNuevo.Margin = new Padding(3, 4, 3, 4);
             btnGuardarNuevo.Name = "btnGuardarNuevo";
-            btnGuardarNuevo.Size = new Size(101, 42);
+            btnGuardarNuevo.Size = new Size(115, 56);
             btnGuardarNuevo.TabIndex = 4;
             btnGuardarNuevo.Text = "Guardar Nuevo";
             btnGuardarNuevo.UseVisualStyleBackColor = true;
@@ -110,36 +119,38 @@
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(159, 102);
+            txtDescripcion.Location = new Point(182, 136);
+            txtDescripcion.Margin = new Padding(3, 4, 3, 4);
             txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(190, 23);
+            txtDescripcion.Size = new Size(217, 27);
             txtDescripcion.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(32, 105);
+            label2.Location = new Point(37, 140);
             label2.Name = "label2";
-            label2.Size = new Size(121, 15);
+            label2.Size = new Size(151, 20);
             label2.TabIndex = 2;
             label2.Text = "Descripción/Nombre:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(26, 53);
+            label1.Location = new Point(30, 71);
             label1.Name = "label1";
-            label1.Size = new Size(127, 15);
+            label1.Size = new Size(162, 20);
             label1.TabIndex = 1;
             label1.Text = "Seleccione el catalogo:";
             // 
             // frmMantenimientoCatalogos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1904, 1061);
+            ClientSize = new Size(1924, 1055);
             Controls.Add(gbMantenimiento);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmMantenimientoCatalogos";
             Text = "MantenimientoCatalogos";
             Load += MantenimientoCatalogos_Load;

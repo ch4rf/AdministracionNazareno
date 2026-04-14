@@ -53,6 +53,22 @@ namespace CapaPresentacion.Mantenimiento
                     CN_TiposRecepcion logica = new CN_TiposRecepcion();
                     dgDatos.DataSource = logica.Mostrar();
                 }
+                else if (seleccion == "Tipos de Actividad")
+                {
+                    CN_Actividades logica = new CN_Actividades();
+                    dgDatos.DataSource = logica.MostrarCatalogoTiposActividad();
+                }
+                else if (seleccion == "Lugar")
+                {
+                    CN_Actividades logica = new CN_Actividades();
+                    dgDatos.DataSource = logica.MostrarLugares();
+                }
+                else if (seleccion == "Horario")
+                { 
+                    CN_Actividades logica = new CN_Actividades();
+                    dgDatos.DataSource = logica.MostrarTiposDuracion();
+                }
+
                 // ... (agregar los demás else if)
 
                 // Limpiamos la caja de texto cada vez que cambiamos de tabla
@@ -148,6 +164,49 @@ namespace CapaPresentacion.Mantenimiento
                         MessageBox.Show("Tipo de recepción actualizada.");
                     }
                 }
+                else if (seleccion == "Tipos de Actividad")
+                {
+                    CN_Actividades logica = new CN_Actividades();
+                    if(idSeleccionado == "")
+                    {
+                        logica.InsertarTipoActividad(txtDescripcion.Text);
+                        MessageBox.Show("Tipo de actividad agregado correctamente.");
+                    }
+                    else
+                    {
+                        logica.EditarTipoActividad(Convert.ToInt32(idSeleccionado), txtDescripcion.Text);
+                        MessageBox.Show("Tipo de actividad actualizado.");
+                    }
+                }
+                else if (seleccion == "Lugar")
+                {
+                    CN_Actividades logica = new CN_Actividades();
+                    if (idSeleccionado == "")
+                    {
+                        logica.InsertarLugar(txtDescripcion.Text);
+                        MessageBox.Show("Lugar agregado correctamente.");
+                    }
+                    else
+                    {
+                        logica.EditarLugar(Convert.ToInt32(idSeleccionado), txtDescripcion.Text);
+                        MessageBox.Show("Lugar actualizado.");
+                    }
+                }
+                else if (seleccion == "Horario")
+                {
+                    CN_Actividades logica = new CN_Actividades();
+                    if (idSeleccionado == "")
+                    {
+                        // Para el horario, vamos a asumir que no requiere hora (false) al insertarlo
+                        logica.InsertarTipoDuracion(txtDescripcion.Text, false);
+                        MessageBox.Show("Horario agregado correctamente.");
+                    }
+                    else
+                    {
+                        logica.EditarTipoDuracion(Convert.ToInt32(idSeleccionado), txtDescripcion.Text, false);
+                        MessageBox.Show("Horario actualizado.");
+                    }
+                }
 
                 // Refrescamos la tabla y limpiamos el texto
                 ActualizarGrilla();
@@ -195,6 +254,21 @@ namespace CapaPresentacion.Mantenimiento
                         CN_TiposRecepcion logica = new CN_TiposRecepcion();
                         logica.Eliminar(Convert.ToInt32(idSeleccionado));
                     }
+                    else if (seleccion == "Tipos de Actividad")
+                    {
+                        CN_Actividades logica = new CN_Actividades();
+                        logica.EliminarTipoActividad(Convert.ToInt32(idSeleccionado));
+                    }
+                    else if (seleccion == "Lugar")
+                    {
+                        CN_Actividades logica = new CN_Actividades();
+                        logica.EliminarLugar(Convert.ToInt32(idSeleccionado));
+                    }
+                    else if (seleccion == "Horario")
+                    {
+                        CN_Actividades logica = new CN_Actividades();
+                        logica.EliminarTipoDuracion(Convert.ToInt32(idSeleccionado));
+                    }
 
                     MessageBox.Show("Registro eliminado.");
                     ActualizarGrilla();
@@ -237,6 +311,11 @@ namespace CapaPresentacion.Mantenimiento
             }
 
             btnGuardarNuevo.Text = "Actualizar";
+        }
+
+        private void dgDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
