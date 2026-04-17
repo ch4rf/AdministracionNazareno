@@ -25,6 +25,12 @@ namespace CapaPresentacion.Membresia
             CargarGrilla();
             CargarCatalogos(); // Llena los ComboBoxes al iniciar
             formato();
+           txtBuscarNombre.Enabled = false;
+            txtBuscarNombre.Visible = false;
+           cbmBuscarEstado.Enabled = false;
+            cbmBuscarEstado.Visible = false;
+            cbmBuscarMinisterio.Enabled = false;
+            cbmBuscarMinisterio.Visible = false;
         }
 
         private void formato()
@@ -203,10 +209,6 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         // BOTÓN LIMPIAR
         // =========================================================
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarFormulario();
-        }
 
         private void LimpiarFormulario()
         {
@@ -236,6 +238,64 @@ namespace CapaPresentacion.Membresia
         private void dgMiembros_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            tabMembresia.SelectedIndex = 0; // Volver a la pestaña de la tabla
+
+        }
+
+        private void btnLimpiar_Click_1(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbmFiltro.SelectedIndex == 0)
+            {
+                txtBuscarNombre.Enabled = true;
+                txtBuscarNombre.Visible = true;
+                cbmBuscarEstado.Enabled = false;
+                cbmBuscarEstado.Visible = false;
+                cbmBuscarMinisterio.Enabled = false;
+                cbmBuscarMinisterio.Visible = false;
+                MessageBox.Show("Funcionalidad de búsqueda por Nombre aún no implementada.");
+            }
+            else if (cbmFiltro.SelectedIndex == 1)
+            {
+                txtBuscarNombre.Enabled = false;
+                txtBuscarNombre.Visible = false;
+                cbmBuscarEstado.Enabled = true;
+                cbmBuscarEstado.Visible = true;
+                cbmBuscarMinisterio.Enabled = false;
+                cbmBuscarMinisterio.Visible = false;
+                MessageBox.Show("Funcionalidad de búsqueda por Estado aún no implementada.");
+
+            }
+            else if (cbmFiltro.SelectedIndex == 2)
+            {
+                txtBuscarNombre.Enabled = false;
+                txtBuscarNombre.Visible = false;
+                cbmBuscarEstado.Enabled = false;
+                cbmBuscarEstado.Visible = false;
+                cbmBuscarMinisterio.Enabled = true;
+                cbmBuscarMinisterio.Visible = true;
+                MessageBox.Show("Funcionalidad de búsqueda por Ministerio aún no implementada.");
+
+            }
         }
     }
 }

@@ -31,7 +31,6 @@
             menuStrip1 = new MenuStrip();
             miembrosToolStripMenuItem = new ToolStripMenuItem();
             verToolStripMenuItem = new ToolStripMenuItem();
-            registrarMiembroToolStripMenuItem = new ToolStripMenuItem();
             gestionFamiliaToolStripMenuItem = new ToolStripMenuItem();
             ministeriosToolStripMenuItem = new ToolStripMenuItem();
             verMinisteriosToolStripMenuItem = new ToolStripMenuItem();
@@ -47,36 +46,30 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { miembrosToolStripMenuItem, ministeriosToolStripMenuItem, actividadesToolStripMenuItem, catalogosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(914, 30);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             menuStrip1.ItemClicked += menuStrip1_ItemClicked;
             // 
             // miembrosToolStripMenuItem
             // 
-            miembrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verToolStripMenuItem, registrarMiembroToolStripMenuItem, gestionFamiliaToolStripMenuItem });
+            miembrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verToolStripMenuItem, gestionFamiliaToolStripMenuItem });
             miembrosToolStripMenuItem.Name = "miembrosToolStripMenuItem";
-            miembrosToolStripMenuItem.Size = new Size(73, 20);
+            miembrosToolStripMenuItem.Size = new Size(90, 24);
             miembrosToolStripMenuItem.Text = "Miembros";
             // 
             // verToolStripMenuItem
             // 
             verToolStripMenuItem.Name = "verToolStripMenuItem";
-            verToolStripMenuItem.Size = new Size(180, 22);
+            verToolStripMenuItem.Size = new Size(224, 26);
             verToolStripMenuItem.Text = "Ver Miembros";
             verToolStripMenuItem.Click += verToolStripMenuItem_Click;
-            // 
-            // registrarMiembroToolStripMenuItem
-            // 
-            registrarMiembroToolStripMenuItem.Name = "registrarMiembroToolStripMenuItem";
-            registrarMiembroToolStripMenuItem.Size = new Size(180, 22);
-            registrarMiembroToolStripMenuItem.Text = "Registrar Miembro";
-            registrarMiembroToolStripMenuItem.Click += registrarMiembroToolStripMenuItem_Click;
             // 
             // gestionFamiliaToolStripMenuItem
             // 
             gestionFamiliaToolStripMenuItem.Name = "gestionFamiliaToolStripMenuItem";
-            gestionFamiliaToolStripMenuItem.Size = new Size(180, 22);
+            gestionFamiliaToolStripMenuItem.Size = new Size(224, 26);
             gestionFamiliaToolStripMenuItem.Text = "Gestion Familia";
             gestionFamiliaToolStripMenuItem.Click += gestionFamiliaToolStripMenuItem_Click;
             // 
@@ -84,13 +77,13 @@
             // 
             ministeriosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verMinisteriosToolStripMenuItem });
             ministeriosToolStripMenuItem.Name = "ministeriosToolStripMenuItem";
-            ministeriosToolStripMenuItem.Size = new Size(77, 20);
+            ministeriosToolStripMenuItem.Size = new Size(95, 24);
             ministeriosToolStripMenuItem.Text = "Ministerios";
             // 
             // verMinisteriosToolStripMenuItem
             // 
             verMinisteriosToolStripMenuItem.Name = "verMinisteriosToolStripMenuItem";
-            verMinisteriosToolStripMenuItem.Size = new Size(180, 22);
+            verMinisteriosToolStripMenuItem.Size = new Size(189, 26);
             verMinisteriosToolStripMenuItem.Text = "Ver Ministerios";
             verMinisteriosToolStripMenuItem.Click += verMinisteriosToolStripMenuItem_Click;
             // 
@@ -98,31 +91,32 @@
             // 
             actividadesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { verActividadesToolStripMenuItem });
             actividadesToolStripMenuItem.Name = "actividadesToolStripMenuItem";
-            actividadesToolStripMenuItem.Size = new Size(80, 20);
+            actividadesToolStripMenuItem.Size = new Size(100, 24);
             actividadesToolStripMenuItem.Text = "Actividades";
             // 
             // verActividadesToolStripMenuItem
             // 
             verActividadesToolStripMenuItem.Name = "verActividadesToolStripMenuItem";
-            verActividadesToolStripMenuItem.Size = new Size(180, 22);
+            verActividadesToolStripMenuItem.Size = new Size(194, 26);
             verActividadesToolStripMenuItem.Text = "Ver Actividades";
             verActividadesToolStripMenuItem.Click += verActividadesToolStripMenuItem_Click;
             // 
             // catalogosToolStripMenuItem
             // 
             catalogosToolStripMenuItem.Name = "catalogosToolStripMenuItem";
-            catalogosToolStripMenuItem.Size = new Size(72, 20);
+            catalogosToolStripMenuItem.Size = new Size(90, 24);
             catalogosToolStripMenuItem.Text = "Catalogos";
             catalogosToolStripMenuItem.Click += catalogosToolStripMenuItem_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(menuStrip1);
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
@@ -139,7 +133,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem miembrosToolStripMenuItem;
         private ToolStripMenuItem verToolStripMenuItem;
-        private ToolStripMenuItem registrarMiembroToolStripMenuItem;
         private ToolStripMenuItem gestionFamiliaToolStripMenuItem;
         private ToolStripMenuItem ministeriosToolStripMenuItem;
         private ToolStripMenuItem verMinisteriosToolStripMenuItem;
