@@ -224,5 +224,237 @@ namespace CapaDatos
 
             return dt;
         }
+
+        public DataTable ObtenerEstadoMiembro() {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("SP_Obtener_Estado", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Estados de los miembros" + ex.Message);
+            }
+            finally 
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+
+        //sp_MostrarCatalogosMinisterios
+
+        public DataTable ObtenerMinisterios()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarCatalogosMinisterios", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Estados de los miembros" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerGeneros
+        public DataTable ObtenerGeneros()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerGeneros", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Generos de los miembros" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+        //sp_MostrarTiposRecepcion
+        public DataTable ObtenerTiposRecepcion()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarTiposRecepcion", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Tipos de Recepción" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerAsentamientos
+
+        public DataTable ObtenerAsentamientos()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerAsentamientos", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Asentamientos" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_MostrarProfesiones
+
+        public DataTable ObtenerProfesiones()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarProfesiones", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Asentamientos" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerFamilias
+
+        public DataTable ObtenerFamilias()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerFamilias", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar las Familias" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+        //sp_MostrarMotivosRetiro
+        public DataTable ObtenerMotivosRetiro()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarMotivosRetiro", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los motivos de retiro" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+
+        public DataTable BuscarMiembroPorNombre(string nombre)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_BuscarMiembrosPorNombre", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Le mandamos el nombre que queremos buscar
+                cmd.Parameters.AddWithValue("@Nombre", nombre);
+
+                conexion.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar los datos del miembro: " + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+
+            return dt;
+        }
     }
 }

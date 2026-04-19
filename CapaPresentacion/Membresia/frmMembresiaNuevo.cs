@@ -23,14 +23,8 @@ namespace CapaPresentacion.Membresia
         private void frmMembresiaNuevo_Load(object sender, EventArgs e)
         {
             CargarGrilla();
-            CargarCatalogos(); // Llena los ComboBoxes al iniciar
+            CargarCatalogosIngreso(); 
             formato();
-           txtBuscarNombre.Enabled = false;
-            txtBuscarNombre.Visible = false;
-           cbmBuscarEstado.Enabled = false;
-            cbmBuscarEstado.Visible = false;
-            cbmBuscarMinisterio.Enabled = false;
-            cbmBuscarMinisterio.Visible = false;
         }
 
         private void formato()
@@ -55,21 +49,56 @@ namespace CapaPresentacion.Membresia
             }
         }
 
-        private void CargarCatalogos()
+
+        private void CargarCatalogosIngreso()
         {
             try
             {
-                /* NOTA: Aquí debes llamar a tus otros métodos de la Capa Negocio 
-                   para llenar cada ComboBox. Ejemplo:
-                   
-                   cmbGenero.DataSource = objCatalogos.MostrarGeneros();
-                   cmbGenero.DisplayMember = "Descripcion";
-                   cmbGenero.ValueMember = "ID";
-                */
+                
+
+                cmbMotivoRetiro.DataSource = objMiembros.ObtenerMotivosRetiro();
+                cmbMotivoRetiro.DisplayMember = "Descripcion";
+                cmbMotivoRetiro.ValueMember = "ID";
+
+                cmbFamilia.DataSource = objMiembros.ObtenerFamilias();
+                cmbFamilia.DisplayMember = "Nombre_Familia";
+                cmbFamilia.ValueMember = "ID_Familia";
+
+                cmbProfesion.DataSource = objMiembros.ObtenerProfesiones();
+                cmbProfesion.DisplayMember = "Descripcion";
+                cmbProfesion.ValueMember = "ID";
+
+                cmbAsentamiento.DataSource = objMiembros.ObtenerAsentamientos();
+                cmbAsentamiento.DisplayMember = "Nombre";
+                cmbAsentamiento.ValueMember = "ID_Asentamiento";
+
+                cmbTipoRecepcion.DataSource = objMiembros.ObtenerTiposRecepcion();
+                cmbTipoRecepcion.DisplayMember = "Descripcion";
+                cmbTipoRecepcion.ValueMember = "ID";
+
+
+
+                cmbGenero.DataSource = objMiembros.ObtenerGeneros();
+                cmbGenero.DisplayMember = "Descripcion";
+                cmbGenero.ValueMember = "ID_Genero";
+
+                cmbEstado.DataSource = objMiembros.ObtenerEstado();
+                cmbEstado.DisplayMember = "Descripcion";
+                cmbEstado.ValueMember = "ID_Estado";
+
+                cmbGenero.SelectedIndex = -1;
+                cmbTipoRecepcion.SelectedIndex = -1;
+                cmbEstado.SelectedIndex = -1;
+                cmbMotivoRetiro.SelectedIndex = -1;
+                cmbProfesion.SelectedIndex = -1;
+                cmbFamilia.SelectedIndex = -1;
+                cmbAsentamiento.SelectedIndex = -1;
+
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar listas desplegables: " + ex.Message);
+                MessageBox.Show("Error al cargar los catálogos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -79,6 +108,9 @@ namespace CapaPresentacion.Membresia
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             idMiembroSeleccionado = 0;
+            gbEDITABLES.Enabled = false;
+            btnLimpiar.Enabled = true;
+            btnLimpiar.Visible = true;
             LimpiarFormulario();
             tabMembresia.SelectedIndex = 1; // Pestaña de Registro
         }
@@ -88,6 +120,10 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void dgMiembros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            gbEDITABLES.Enabled = true;
+            btnGuardar.Text = "Actualizar";
+            btnLimpiar.Enabled = false;
+            btnLimpiar.Visible = false;
             if (e.RowIndex < 0) return;
 
             try
@@ -197,6 +233,7 @@ namespace CapaPresentacion.Membresia
                 // 4. ACCIONES FINALES POST-GUARDADO
                 LimpiarFormulario();            // Limpia todas las cajas de texto y combos
                 CargarGrilla();                 // Actualiza la tabla (DataGridView) para mostrar los cambios
+                gbEDITABLES.Enabled = false;
                 tabMembresia.SelectedIndex = 0; // Cambia la vista de regreso a la pestaña de la tabla
             }
             catch (Exception ex)
@@ -242,12 +279,20 @@ namespace CapaPresentacion.Membresia
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
-
+            try
+            {
+                dgMiembros.DataSource = objMiembros.BuscarMiembroPorNombre(txtBuscarNombre.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
+            gbEDITABLES.Enabled = false;
             tabMembresia.SelectedIndex = 0; // Volver a la pestaña de la tabla
 
         }
@@ -256,46 +301,15 @@ namespace CapaPresentacion.Membresia
         {
             LimpiarFormulario();
         }
+    
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            CargarGrilla();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbmFiltro.SelectedIndex == 0)
-            {
-                txtBuscarNombre.Enabled = true;
-                txtBuscarNombre.Visible = true;
-                cbmBuscarEstado.Enabled = false;
-                cbmBuscarEstado.Visible = false;
-                cbmBuscarMinisterio.Enabled = false;
-                cbmBuscarMinisterio.Visible = false;
-                MessageBox.Show("Funcionalidad de búsqueda por Nombre aún no implementada.");
-            }
-            else if (cbmFiltro.SelectedIndex == 1)
-            {
-                txtBuscarNombre.Enabled = false;
-                txtBuscarNombre.Visible = false;
-                cbmBuscarEstado.Enabled = true;
-                cbmBuscarEstado.Visible = true;
-                cbmBuscarMinisterio.Enabled = false;
-                cbmBuscarMinisterio.Visible = false;
-                MessageBox.Show("Funcionalidad de búsqueda por Estado aún no implementada.");
+        
 
-            }
-            else if (cbmFiltro.SelectedIndex == 2)
-            {
-                txtBuscarNombre.Enabled = false;
-                txtBuscarNombre.Visible = false;
-                cbmBuscarEstado.Enabled = false;
-                cbmBuscarEstado.Visible = false;
-                cbmBuscarMinisterio.Enabled = true;
-                cbmBuscarMinisterio.Visible = true;
-                MessageBox.Show("Funcionalidad de búsqueda por Ministerio aún no implementada.");
-
-            }
-        }
+       
     }
 }

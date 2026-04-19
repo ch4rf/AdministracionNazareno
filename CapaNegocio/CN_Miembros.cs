@@ -29,5 +29,48 @@ namespace CapaNegocio
         {
             objDatos.EditarMiembro(idMiembro, idFamilia, rolFamiliar, dpi, nombres, apellidos, idGenero, fechaNacimiento, idProfesion, telefono, correo, fechaBautismo, fechaRecepcion, idRecepcion, idEstado, idMotivoRetiro, fechaRetiro, idAsentamiento, calleAvenida, referenciaCasa);
         }
+
+        public DataTable ObtenerEstado()
+        {
+            return objDatos.ObtenerEstadoMiembro();
+        }
+
+        public DataTable ObtenerMinisterios()
+        {
+            return objDatos.ObtenerMinisterios();
+        }
+
+        public DataTable ObtenerGeneros()
+        {
+            return objDatos.ObtenerGeneros();
+        }
+
+        public DataTable ObtenerTiposRecepcion()
+        {
+            return objDatos.ObtenerTiposRecepcion();
+        }
+
+        public DataTable ObtenerAsentamientos()
+        {
+            return objDatos.ObtenerAsentamientos();
+        }
+        public DataTable ObtenerProfesiones()
+        {
+            return objDatos.ObtenerProfesiones();
+        }
+
+        public DataTable ObtenerFamilias()
+        {
+            return objDatos.ObtenerFamilias();
+        }
+
+        public DataTable ObtenerMotivosRetiro()
+        {
+            return objDatos.ObtenerMotivosRetiro();
+        }
+        public DataTable BuscarMiembroPorNombre(string nombre)
+        {
+            return objDatos.BuscarMiembroPorNombre(nombre);
+        }
     }
 }
