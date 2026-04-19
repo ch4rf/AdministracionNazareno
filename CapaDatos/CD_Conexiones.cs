@@ -21,7 +21,7 @@ namespace CapaDatos
         {
             //Inicializamos nuestras variables privadas
             this.Base = "IglesiaBD";
-            this.servidor = "JOSE";
+            this.servidor = "DESKTOP-QLM7FD0";
             this.seguridad = true;
         }
 

@@ -99,6 +99,7 @@
             tabMembresia.SelectedIndex = 0;
             tabMembresia.Size = new Size(1455, 774);
             tabMembresia.TabIndex = 0;
+            tabMembresia.Selecting += tabMembresia_Selecting;
             // 
             // tabPage1
             // 
@@ -205,6 +206,7 @@
             tabopage2.TabIndex = 1;
             tabopage2.Text = "REGISTRAR";
             tabopage2.UseVisualStyleBackColor = true;
+            tabopage2.Click += tabopage2_Click;
             // 
             // gbEDITABLES
             // 
@@ -336,7 +338,7 @@
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(89, 61);
             btnGuardar.TabIndex = 2;
-            btnGuardar.Text = "guardar";
+            btnGuardar.Text = "Guardar Nuevo";
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
             // 

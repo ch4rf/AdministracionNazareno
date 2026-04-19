@@ -23,7 +23,7 @@ namespace CapaPresentacion.Membresia
         private void frmMembresiaNuevo_Load(object sender, EventArgs e)
         {
             CargarGrilla();
-            CargarCatalogosIngreso(); 
+            CargarCatalogosIngreso();
             formato();
         }
 
@@ -54,7 +54,7 @@ namespace CapaPresentacion.Membresia
         {
             try
             {
-                
+
 
                 cmbMotivoRetiro.DataSource = objMiembros.ObtenerMotivosRetiro();
                 cmbMotivoRetiro.DisplayMember = "Descripcion";
@@ -113,6 +113,7 @@ namespace CapaPresentacion.Membresia
             btnLimpiar.Visible = true;
             LimpiarFormulario();
             tabMembresia.SelectedIndex = 1; // Pestaña de Registro
+            btnGuardar.Text = "Guardar Nuevo";
         }
 
         // =========================================================
@@ -179,6 +180,7 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            btnGuardar.Text = "Guardar Nuevo";
             // 1. VALIDACIÓN BÁSICA: Asegurarnos de que no dejen en blanco el nombre o apellido
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtApellidos.Text))
             {
@@ -241,6 +243,7 @@ namespace CapaPresentacion.Membresia
                 // Si ocurre un error a nivel de Base de Datos o conexión, lo mostramos aquí
                 MessageBox.Show("Ocurrió un error al guardar: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         // =========================================================
@@ -301,15 +304,21 @@ namespace CapaPresentacion.Membresia
         {
             LimpiarFormulario();
         }
-    
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             CargarGrilla();
         }
 
-        
+        private void tabopage2_Click(object sender, EventArgs e)
+        {
 
-       
+        }
+
+        private void tabMembresia_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+
+        }
     }
 }
