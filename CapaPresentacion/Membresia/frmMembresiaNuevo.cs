@@ -320,5 +320,15 @@ namespace CapaPresentacion.Membresia
         {
 
         }
+
+        private void gbEDITABLES_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
