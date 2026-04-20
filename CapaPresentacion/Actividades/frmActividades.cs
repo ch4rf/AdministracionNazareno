@@ -24,23 +24,22 @@ namespace CapaPresentacion
             ConfigurarGrid();
             CargarCombos();
 
-            // Rango de fechas por defecto: mes actual
-            dtpDel.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            // dtpDel muestra hoy — se usa para nueva actividad
+            dtpDel.Value = DateTime.Today;
+            // dtpAl muestra fin de mes actual
             dtpAl.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month,
                            DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
 
-            // Horas por defecto: todo el día
             dtpInicio.Value = DateTime.Today;
             dtpFinalizacion.Value = DateTime.Today.AddHours(23).AddMinutes(59);
-
-            // Los dtp de hora inician ocultos — se muestran solo si el horario lo requiere
             dtpInicio.Visible = false;
             dtpFinalizacion.Visible = false;
+            label1.Visible = false;
+            label2.Visible = false;
 
-            Buscar();
+            // Al cargar muestra TODAS las actividades sin filtro de fecha
+            MostrarTodas();
 
-            // El botón Nueva Actividad usa SOLO btnNuevaActividad_Click_v2
-            // Nos aseguramos de que el evento correcto esté conectado
             btnNuevaActividad.Click -= btnNuevaActividad_Click;
             btnNuevaActividad.Click -= btnNuevaActividad_Click_v2;
             btnNuevaActividad.Click += btnNuevaActividad_Click_v2;
@@ -168,11 +167,13 @@ namespace CapaPresentacion
 
             // cmbHorario — sin fila vacía, siempre debe tener valor
             DataTable dtDuracion = objNeg.MostrarTiposDuracion();
+            DataRow filaVacia = dtDuracion.NewRow();
+            dtDuracion.Rows.InsertAt(filaVacia, 0);
             cmbHorario.DataSource = null;
             cmbHorario.DataSource = dtDuracion;
             cmbHorario.DisplayMember = "Descripcion";
             cmbHorario.ValueMember = "ID";
-            cmbHorario.SelectedIndex = 0;
+            cmbHorario.SelectedIndex = 0; // selecciona la fila vacía
 
         }
 
@@ -377,6 +378,8 @@ namespace CapaPresentacion
                 bool requiereHora = filas.Length > 0 && Convert.ToBoolean(filas[0]["Requiere_Hora"]);
                 dtpInicio.Visible = requiereHora;
                 dtpFinalizacion.Visible = requiereHora;
+                label1.Visible = requiereHora;
+                label2.Visible = requiereHora;
             }
         }
 
@@ -385,6 +388,23 @@ namespace CapaPresentacion
 
         }
 
+
+        private void MostrarTodas()
+        {
+            // Busca sin filtro de fechas — manda un rango muy amplio
+            DataTable dt = objNeg.BuscarActividades(
+                "",       // sin texto
+                null,     // todos los tipos
+                null,     // todos los ministerios
+                null,     // todos los lugares
+                null,     // todos los anfitriones
+                new DateTime(2000, 1, 1),   // desde el año 2000
+                new DateTime(2099, 12, 31), // hasta el año 2099
+                TimeSpan.Zero,
+                new TimeSpan(23, 59, 59)
+            );
+            MostrarAgrupado(dt);
+        }
 
 
     }
