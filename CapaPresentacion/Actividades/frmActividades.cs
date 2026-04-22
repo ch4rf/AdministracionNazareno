@@ -18,34 +18,37 @@ namespace CapaPresentacion
         {
             InitializeComponent();
         }
-
+        //carga el formulario
         private void frmActividades_Load(object sender, EventArgs e)
         {
             ConfigurarGrid();
             CargarCombos();
 
-            // dtpDel muestra hoy — se usa para nueva actividad
+            // dtpDel muestra hoy (fecha de la nueva actividad)
             dtpDel.Value = DateTime.Today;
-            // dtpAl muestra fin de mes actual
+            // dtpAl muestra fin del mes actual (para el filtro)
             dtpAl.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month,
-                           DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
+                          DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
 
             dtpInicio.Value = DateTime.Today;
             dtpFinalizacion.Value = DateTime.Today.AddHours(23).AddMinutes(59);
+
+            // Los dtp de hora inician ocultos
             dtpInicio.Visible = false;
             dtpFinalizacion.Visible = false;
             label1.Visible = false;
             label2.Visible = false;
 
-            // Al cargar muestra TODAS las actividades sin filtro de fecha
+            // Muestra todas las actividades al abrir
             MostrarTodas();
 
+            // Asegura que solo btnNuevaActividad_Click_v2 maneje el click
             btnNuevaActividad.Click -= btnNuevaActividad_Click;
             btnNuevaActividad.Click -= btnNuevaActividad_Click_v2;
             btnNuevaActividad.Click += btnNuevaActividad_Click_v2;
-
         }
 
+        //configurar columnas del datagridview
         private void ConfigurarGrid()
         {
             dg1.AutoGenerateColumns = false;
@@ -134,7 +137,7 @@ namespace CapaPresentacion
         }
 
 
-
+        //cargar combos
         private void CargarCombos()
         {
             // cmbTipo
@@ -165,19 +168,36 @@ namespace CapaPresentacion
             cmbAnfitrion.DisplayMember = "Nombres";
             cmbAnfitrion.ValueMember = "ID";
 
-            // cmbHorario — sin fila vacía, siempre debe tener valor
+            // cmbHorario — con fila vacía al inicio
             DataTable dtDuracion = objNeg.MostrarTiposDuracion();
-            DataRow filaVacia = dtDuracion.NewRow();
-            dtDuracion.Rows.InsertAt(filaVacia, 0);
+            dtDuracion.Rows.InsertAt(dtDuracion.NewRow(), 0);
             cmbHorario.DataSource = null;
             cmbHorario.DataSource = dtDuracion;
             cmbHorario.DisplayMember = "Descripcion";
             cmbHorario.ValueMember = "ID";
-            cmbHorario.SelectedIndex = 0; // selecciona la fila vacía
+            cmbHorario.SelectedIndex = 0;
 
         }
 
+        //MOSTRAR TODAS (sin filtro — al cargar y al limpiar)
+        private void MostrarTodas()
+        {
+            // Busca sin filtro de fechas — manda un rango muy amplio
+            DataTable dt = objNeg.BuscarActividades(
+                "",       // sin texto
+                null,     // todos los tipos
+                null,     // todos los ministerios
+                null,     // todos los lugares
+                null,     // todos los anfitriones
+                new DateTime(2000, 1, 1),   // desde el año 2000
+                new DateTime(2099, 12, 31), // hasta el año 2099
+                TimeSpan.Zero,
+                new TimeSpan(23, 59, 59)
+            );
+            MostrarAgrupado(dt);
+        }
 
+        //Buscar los filtros del formulario
         private void Buscar()
         {
             int? idTipo = (cmbTipo.SelectedValue is int t) ? t : (int?)null;
@@ -190,14 +210,14 @@ namespace CapaPresentacion
                 idTipo, idMinisterio, idLugar, idAnfitrion,
                 dtpDel.Value,
                 dtpAl.Value,
-                dtpInicio.Visible ? dtpInicio.Value.TimeOfDay : TimeSpan.Zero,
-                dtpFinalizacion.Visible ? dtpFinalizacion.Value.TimeOfDay : new TimeSpan(23, 59, 59)
+                dtpInicio.Visible ? dtpInicio.Value.TimeOfDay : (TimeSpan?)null,
+                dtpFinalizacion.Visible ? dtpFinalizacion.Value.TimeOfDay : (TimeSpan?)null
             );
 
             MostrarAgrupado(dt);
         }
 
-
+        
         private void MostrarAgrupado(DataTable dt)
         {
             dg1.Rows.Clear();
@@ -253,6 +273,7 @@ namespace CapaPresentacion
 
         }
 
+        //btnBuscar
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             Buscar();
@@ -266,7 +287,7 @@ namespace CapaPresentacion
 
 
 
-
+        //btnLimpiar
         private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
             txtBuscar.Clear();
@@ -281,6 +302,7 @@ namespace CapaPresentacion
             dtpInicio.Value = DateTime.Today;
             dtpFinalizacion.Value = DateTime.Today.AddHours(23).AddMinutes(59);
             // NO llama a Buscar() — el grid queda como estaba
+            MostrarTodas();
         }
 
         private void frmActividades_Click(object sender, EventArgs e)
@@ -288,6 +310,7 @@ namespace CapaPresentacion
 
         }
 
+        //btnNuevaActividad
         private void btnNuevaActividad_Click_v2(object sender, EventArgs e)
         {
             if (btnNuevaActividad.Tag?.ToString() == "guardando")
@@ -318,7 +341,7 @@ namespace CapaPresentacion
         // ============================================================
         private void GuardarActividad()
         {
-            // ── Validaciones ──────────────────────────────────────────
+            // Validaciones
             if (!(cmbTipo.SelectedValue is int))
             { MessageBox.Show("Selecciona un Tipo de Actividad.", "Aviso"); return; }
 
@@ -331,43 +354,46 @@ namespace CapaPresentacion
             if (!(cmbHorario.SelectedValue is int))
             { MessageBox.Show("Selecciona un tipo de Horario.", "Aviso"); return; }
 
-            // Si el horario requiere hora, validar que inicio < fin
             if (dtpInicio.Visible && dtpInicio.Value.TimeOfDay >= dtpFinalizacion.Value.TimeOfDay)
             { MessageBox.Show("La hora de inicio debe ser menor a la hora de finalización.", "Aviso"); return; }
 
-            // ── Leer valores ──────────────────────────────────────────
+            // Leer valores
             int idTipo = (int)cmbTipo.SelectedValue;
             int idMinisterio = (int)cmbMinisterio.SelectedValue;
             int idLugar = (int)cmbLugar.SelectedValue;
-            int idTipoDuracion = (int)cmbHorario.SelectedValue;
+            int? idTipoDuracion = (cmbHorario.SelectedValue is int d) ? d : (int?)null;
             int? idAnfitrion = (cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
 
-            // Si los dtp están visibles manda la hora, si no manda NULL
             TimeSpan? horaInicio = dtpInicio.Visible ? dtpInicio.Value.TimeOfDay : (TimeSpan?)null;
             TimeSpan? horaFin = dtpFinalizacion.Visible ? dtpFinalizacion.Value.TimeOfDay : (TimeSpan?)null;
 
-            // ── Insertar ──────────────────────────────────────────────
-            objNeg.InsertarActividad(
-                idMinisterio,
-                idTipo,
-                dtpDel.Value.Date,
-                idTipoDuracion,
-                horaInicio,
-                horaFin,
-                idLugar,
-                idAnfitrion
-            );
+            try
+            {
+                objNeg.InsertarActividad(
+                    idMinisterio, idTipo,
+                    dtpDel.Value.Date,
+                    idTipoDuracion,
+                    horaInicio, horaFin,
+                    idLugar, idAnfitrion
+                );
 
-            MessageBox.Show("✅ Actividad guardada correctamente.", "Éxito",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("✅ Actividad guardada correctamente.", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Error al guardar: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // no resetea el botón si hubo error
+            }
 
-            // Regresa el botón a su estado original y refresca el grid
+            // Regresa el botón y refresca
             btnNuevaActividad.Text = "Nueva Actividad";
             btnNuevaActividad.Tag = null;
-            Buscar(); // ← refresca SOLO al guardar
+            MostrarTodas();
         }
 
-
+        //cmbHorario
         private void cmbHorario_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbHorario.SelectedValue is int idDuracion)
@@ -381,6 +407,13 @@ namespace CapaPresentacion
                 label1.Visible = requiereHora;
                 label2.Visible = requiereHora;
             }
+            else
+            {
+                dtpInicio.Visible = false;
+                dtpFinalizacion.Visible = false;
+                label1.Visible = false;
+                label2.Visible = false;
+            }
         }
 
         private void dg1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -389,22 +422,7 @@ namespace CapaPresentacion
         }
 
 
-        private void MostrarTodas()
-        {
-            // Busca sin filtro de fechas — manda un rango muy amplio
-            DataTable dt = objNeg.BuscarActividades(
-                "",       // sin texto
-                null,     // todos los tipos
-                null,     // todos los ministerios
-                null,     // todos los lugares
-                null,     // todos los anfitriones
-                new DateTime(2000, 1, 1),   // desde el año 2000
-                new DateTime(2099, 12, 31), // hasta el año 2099
-                TimeSpan.Zero,
-                new TimeSpan(23, 59, 59)
-            );
-            MostrarAgrupado(dt);
-        }
+
 
 
     }

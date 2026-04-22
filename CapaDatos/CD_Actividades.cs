@@ -65,11 +65,24 @@ namespace CapaDatos
             }
         }
 
+        public DataTable MostrarTiposDuracion()
+        {
+            using (SqlConnection cn = CrearConexion())
+            using (SqlCommand cmd = new SqlCommand("sp_MostrarTiposDuracion", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
         //BUSCAR
         public DataTable BuscarActividades(string buscar, int? idTipo, int? idMinisterio,
-        int? idLugar, int? idAnfitrion,
-        DateTime fechaDesde, DateTime fechaHasta,
-        TimeSpan horaInicio, TimeSpan horaFin)
+            int? idLugar, int? idAnfitrion,
+            DateTime fechaDesde, DateTime fechaHasta,
+            TimeSpan? horaInicio, TimeSpan? horaFin)
         {
             using (SqlConnection cn = CrearConexion())
             using (SqlCommand cmd = new SqlCommand("sp_BuscarActividades", cn))
@@ -88,8 +101,10 @@ namespace CapaDatos
                     idAnfitrion.HasValue ? (object)idAnfitrion.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@FechaDesde", fechaDesde.Date);
                 cmd.Parameters.AddWithValue("@FechaHasta", fechaHasta.Date);
-                cmd.Parameters.AddWithValue("@HoraInicio", horaInicio);
-                cmd.Parameters.AddWithValue("@HoraFin", horaFin);
+                cmd.Parameters.AddWithValue("@HoraInicio",
+                    horaInicio.HasValue ? (object)horaInicio.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@HoraFin",
+                    horaFin.HasValue ? (object)horaFin.Value : DBNull.Value);
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -160,9 +175,7 @@ namespace CapaDatos
             using (SqlCommand cmd = new SqlCommand("sp_EliminarActividad", cn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@IdActividad", idActividad);
-
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -234,20 +247,6 @@ namespace CapaDatos
             }
         }
 
-        public DataTable MostrarTiposDuracion()
-        {
-            using (SqlConnection cn = CrearConexion())
-            using (SqlCommand cmd = new SqlCommand("sp_MostrarTiposDuracion", cn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                return dt;
-            }
-        }
-
-
         public void InsertarLugar(string nombre)
         {
             using (SqlConnection cn = CrearConexion())
@@ -285,7 +284,7 @@ namespace CapaDatos
             }
         }
 
-
+        //tipos duracion
         public void InsertarTipoDuracion(string descripcion, bool requiereHora)
         {
             using (SqlConnection cn = CrearConexion())

@@ -325,6 +325,7 @@
             Name = "frmActividades";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Actividades";
+            WindowState = FormWindowState.Maximized;
             Load += frmActividades_Load;
             Click += frmActividades_Click;
             ((System.ComponentModel.ISupportInitialize)dg1).EndInit();
