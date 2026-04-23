@@ -23,7 +23,7 @@ namespace CapaPresentacion.Membresia
         private void frmMembresiaNuevo_Load(object sender, EventArgs e)
         {
             CargarGrilla();
-            CargarCatalogos(); // Llena los ComboBoxes al iniciar
+            CargarCatalogosIngreso();
             formato();
         }
 
@@ -49,21 +49,56 @@ namespace CapaPresentacion.Membresia
             }
         }
 
-        private void CargarCatalogos()
+
+        private void CargarCatalogosIngreso()
         {
             try
             {
-                /* NOTA: Aquí debes llamar a tus otros métodos de la Capa Negocio 
-                   para llenar cada ComboBox. Ejemplo:
-                   
-                   cmbGenero.DataSource = objCatalogos.MostrarGeneros();
-                   cmbGenero.DisplayMember = "Descripcion";
-                   cmbGenero.ValueMember = "ID";
-                */
+
+
+                cmbMotivoRetiro.DataSource = objMiembros.ObtenerMotivosRetiro();
+                cmbMotivoRetiro.DisplayMember = "Descripcion";
+                cmbMotivoRetiro.ValueMember = "ID";
+
+                cmbFamilia.DataSource = objMiembros.ObtenerFamilias();
+                cmbFamilia.DisplayMember = "Nombre_Familia";
+                cmbFamilia.ValueMember = "ID_Familia";
+
+                cmbProfesion.DataSource = objMiembros.ObtenerProfesiones();
+                cmbProfesion.DisplayMember = "Descripcion";
+                cmbProfesion.ValueMember = "ID";
+
+                cmbAsentamiento.DataSource = objMiembros.ObtenerAsentamientos();
+                cmbAsentamiento.DisplayMember = "Nombre";
+                cmbAsentamiento.ValueMember = "ID_Asentamiento";
+
+                cmbTipoRecepcion.DataSource = objMiembros.ObtenerTiposRecepcion();
+                cmbTipoRecepcion.DisplayMember = "Descripcion";
+                cmbTipoRecepcion.ValueMember = "ID";
+
+
+
+                cmbGenero.DataSource = objMiembros.ObtenerGeneros();
+                cmbGenero.DisplayMember = "Descripcion";
+                cmbGenero.ValueMember = "ID_Genero";
+
+                cmbEstado.DataSource = objMiembros.ObtenerEstado();
+                cmbEstado.DisplayMember = "Descripcion";
+                cmbEstado.ValueMember = "ID_Estado";
+
+                cmbGenero.SelectedIndex = -1;
+                cmbTipoRecepcion.SelectedIndex = -1;
+                cmbEstado.SelectedIndex = -1;
+                cmbMotivoRetiro.SelectedIndex = -1;
+                cmbProfesion.SelectedIndex = -1;
+                cmbFamilia.SelectedIndex = -1;
+                cmbAsentamiento.SelectedIndex = -1;
+
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar listas desplegables: " + ex.Message);
+                MessageBox.Show("Error al cargar los catálogos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -73,8 +108,12 @@ namespace CapaPresentacion.Membresia
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             idMiembroSeleccionado = 0;
+            gbEDITABLES.Enabled = false;
+            btnLimpiar.Enabled = true;
+            btnLimpiar.Visible = true;
             LimpiarFormulario();
             tabMembresia.SelectedIndex = 1; // Pestaña de Registro
+            btnGuardar.Text = "Guardar Nuevo";
         }
 
         // =========================================================
@@ -82,6 +121,10 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void dgMiembros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            gbEDITABLES.Enabled = true;
+            btnGuardar.Text = "Actualizar";
+            btnLimpiar.Enabled = false;
+            btnLimpiar.Visible = false;
             if (e.RowIndex < 0) return;
 
             try
@@ -137,6 +180,7 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            btnGuardar.Text = "Guardar Nuevo";
             // 1. VALIDACIÓN BÁSICA: Asegurarnos de que no dejen en blanco el nombre o apellido
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtApellidos.Text))
             {
@@ -191,6 +235,7 @@ namespace CapaPresentacion.Membresia
                 // 4. ACCIONES FINALES POST-GUARDADO
                 LimpiarFormulario();            // Limpia todas las cajas de texto y combos
                 CargarGrilla();                 // Actualiza la tabla (DataGridView) para mostrar los cambios
+                gbEDITABLES.Enabled = false;
                 tabMembresia.SelectedIndex = 0; // Cambia la vista de regreso a la pestaña de la tabla
             }
             catch (Exception ex)
@@ -198,15 +243,12 @@ namespace CapaPresentacion.Membresia
                 // Si ocurre un error a nivel de Base de Datos o conexión, lo mostramos aquí
                 MessageBox.Show("Ocurrió un error al guardar: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         // =========================================================
         // BOTÓN LIMPIAR
         // =========================================================
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarFormulario();
-        }
 
         private void LimpiarFormulario()
         {
@@ -234,6 +276,57 @@ namespace CapaPresentacion.Membresia
         }
 
         private void dgMiembros_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                dgMiembros.DataSource = objMiembros.BuscarMiembroPorNombre(txtBuscarNombre.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            gbEDITABLES.Enabled = false;
+            tabMembresia.SelectedIndex = 0; // Volver a la pestaña de la tabla
+
+        }
+
+        private void btnLimpiar_Click_1(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CargarGrilla();
+        }
+
+        private void tabopage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabMembresia_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+
+        }
+
+        private void gbEDITABLES_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
         {
 
         }
