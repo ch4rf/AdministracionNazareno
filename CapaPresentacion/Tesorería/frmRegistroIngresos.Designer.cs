@@ -65,6 +65,7 @@
             Column5 = new DataGridViewTextBoxColumn();
             label13 = new Label();
             label12 = new Label();
+            button3 = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -386,7 +387,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(1107, 540);
+            label13.Location = new Point(1107, 548);
             label13.Name = "label13";
             label13.Size = new Size(74, 15);
             label13.TabIndex = 14;
@@ -395,17 +396,27 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(981, 540);
+            label12.Location = new Point(981, 548);
             label12.Name = "label12";
             label12.Size = new Size(86, 15);
             label12.TabIndex = 13;
             label12.Text = "Total Registros:";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(560, 540);
+            button3.Name = "button3";
+            button3.Size = new Size(129, 23);
+            button3.TabIndex = 15;
+            button3.Text = "Limpiar Registros";
+            button3.UseVisualStyleBackColor = true;
             // 
             // frmRegistroIngresos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1360, 634);
+            Controls.Add(button3);
             Controls.Add(label13);
             Controls.Add(label12);
             Controls.Add(comboBox4);
@@ -472,5 +483,6 @@
         private DataGridViewTextBoxColumn Column5;
         private Label label13;
         private Label label12;
+        private Button button3;
     }
 }
