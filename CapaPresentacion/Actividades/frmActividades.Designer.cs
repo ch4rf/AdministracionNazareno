@@ -243,6 +243,7 @@
             cmbLugar.Name = "cmbLugar";
             cmbLugar.Size = new Size(370, 31);
             cmbLugar.TabIndex = 20;
+            cmbLugar.SelectedIndexChanged += cmbLugar_SelectedIndexChanged;
             // 
             // label3
             // 

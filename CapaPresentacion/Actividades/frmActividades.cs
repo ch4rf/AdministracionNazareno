@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace CapaPresentacion
 {
@@ -23,6 +24,11 @@ namespace CapaPresentacion
         {
             ConfigurarGrid();
             CargarCombos();
+            // Inicia oculto — se muestra solo si el lugar lo requiere
+            cmbAnfitrion.Visible = false;
+            label4.Visible = false;
+
+
 
             // dtpDel muestra hoy (fecha de la nueva actividad)
             dtpDel.Value = DateTime.Today;
@@ -217,7 +223,7 @@ namespace CapaPresentacion
             MostrarAgrupado(dt);
         }
 
-        
+
         private void MostrarAgrupado(DataTable dt)
         {
             dg1.Rows.Clear();
@@ -357,40 +363,52 @@ namespace CapaPresentacion
             if (dtpInicio.Visible && dtpInicio.Value.TimeOfDay >= dtpFinalizacion.Value.TimeOfDay)
             { MessageBox.Show("La hora de inicio debe ser menor a la hora de finalización.", "Aviso"); return; }
 
-            // Leer valores
+            // 1. Leer valores básicos
             int idTipo = (int)cmbTipo.SelectedValue;
             int idMinisterio = (int)cmbMinisterio.SelectedValue;
             int idLugar = (int)cmbLugar.SelectedValue;
             int? idTipoDuracion = (cmbHorario.SelectedValue is int d) ? d : (int?)null;
-            int? idAnfitrion = (cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
+            int? idAnfitrion = (cmbAnfitrion.Visible && cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
 
-            TimeSpan? horaInicio = dtpInicio.Visible ? dtpInicio.Value.TimeOfDay : (TimeSpan?)null;
-            TimeSpan? horaFin = dtpFinalizacion.Visible ? dtpFinalizacion.Value.TimeOfDay : (TimeSpan?)null;
+            // 2. Lógica Refinada para las Horas
+            TimeSpan? horaInicio = null;
+            TimeSpan? horaFin = null;
+
+            // Solo tomamos el tiempo de los DTP si están visibles (es decir, si NO es Indefinido)
+            if (dtpInicio.Visible)
+            {
+                horaInicio = dtpInicio.Value.TimeOfDay;
+                horaFin = dtpFinalizacion.Value.TimeOfDay;
+            }
 
             try
             {
+                // 3. Llamada al Negocio
                 objNeg.InsertarActividad(
-                    idMinisterio, idTipo,
-                    dtpDel.Value.Date,
+                    idMinisterio,
+                    idTipo,
+                    dtpDel.Value.Date, // Asegúrate de que dtpDel sea el de la fecha de la actividad
                     idTipoDuracion,
-                    horaInicio, horaFin,
-                    idLugar, idAnfitrion
+                    horaInicio,
+                    horaFin,
+                    idLugar,
+                    idAnfitrion
                 );
 
                 MessageBox.Show("✅ Actividad guardada correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpieza y refresco
+                btnNuevaActividad.Text = "Nueva Actividad";
+                btnNuevaActividad.Tag = null;
+                MostrarTodas();
             }
             catch (Exception ex)
             {
+                // El error probablemente viene de aquí si los parámetros no aceptan nulos
                 MessageBox.Show("❌ Error al guardar: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // no resetea el botón si hubo error
             }
-
-            // Regresa el botón y refresca
-            btnNuevaActividad.Text = "Nueva Actividad";
-            btnNuevaActividad.Tag = null;
-            MostrarTodas();
         }
 
         //cmbHorario
@@ -421,9 +439,29 @@ namespace CapaPresentacion
 
         }
 
+        private void cmbLugar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbLugar.SelectedValue is int idLugar)
+            {
+                // Busca si ese lugar requiere anfitrión
+                DataTable dt = objNeg.MostrarLugares();
+                DataRow[] filas = dt.Select("ID = " + idLugar);
 
+                bool requiereAnfitrion = filas.Length > 0
+                    && Convert.ToBoolean(filas[0]["Requiere_Anfitrion"]);
 
-
-
+                cmbAnfitrion.Visible = requiereAnfitrion;
+                label4.Visible = requiereAnfitrion;
+                // Si no requiere, limpia la selección
+                if (!requiereAnfitrion)
+                    cmbAnfitrion.SelectedIndex = 0;
+            }
+            else
+            {
+                // Fila vacía — ocultar anfitrión
+                cmbAnfitrion.Visible = false;
+                label4.Visible = false;
+            }
+        }
     }
 }
