@@ -58,7 +58,7 @@
             // lbl1
             // 
             lbl1.AutoSize = true;
-            lbl1.Location = new Point(146, 52);
+            lbl1.Location = new Point(146, 90);
             lbl1.Margin = new Padding(4, 0, 4, 0);
             lbl1.Name = "lbl1";
             lbl1.Size = new Size(71, 23);
@@ -67,16 +67,17 @@
             // 
             // txtBuscar
             // 
-            txtBuscar.Location = new Point(149, 79);
+            txtBuscar.Location = new Point(149, 117);
             txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Size = new Size(370, 30);
             txtBuscar.TabIndex = 1;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // lbl2
             // 
             lbl2.AutoSize = true;
-            lbl2.Location = new Point(657, 52);
+            lbl2.Location = new Point(657, 90);
             lbl2.Margin = new Padding(4, 0, 4, 0);
             lbl2.Name = "lbl2";
             lbl2.Size = new Size(47, 23);
@@ -86,7 +87,7 @@
             // cmbTipo
             // 
             cmbTipo.FormattingEnabled = true;
-            cmbTipo.Location = new Point(661, 78);
+            cmbTipo.Location = new Point(661, 116);
             cmbTipo.Name = "cmbTipo";
             cmbTipo.Size = new Size(370, 31);
             cmbTipo.TabIndex = 4;
@@ -94,7 +95,7 @@
             // cmbMinisterio
             // 
             cmbMinisterio.FormattingEnabled = true;
-            cmbMinisterio.Location = new Point(1176, 78);
+            cmbMinisterio.Location = new Point(1176, 116);
             cmbMinisterio.Name = "cmbMinisterio";
             cmbMinisterio.Size = new Size(370, 31);
             cmbMinisterio.TabIndex = 6;
@@ -102,7 +103,7 @@
             // lbl3
             // 
             lbl3.AutoSize = true;
-            lbl3.Location = new Point(1172, 52);
+            lbl3.Location = new Point(1172, 90);
             lbl3.Margin = new Padding(4, 0, 4, 0);
             lbl3.Name = "lbl3";
             lbl3.Size = new Size(94, 23);
@@ -112,7 +113,7 @@
             // lbl4
             // 
             lbl4.AutoSize = true;
-            lbl4.Location = new Point(146, 169);
+            lbl4.Location = new Point(146, 207);
             lbl4.Margin = new Padding(4, 0, 4, 0);
             lbl4.Name = "lbl4";
             lbl4.Size = new Size(45, 23);
@@ -124,7 +125,7 @@
             dtpDel.CustomFormat = "";
             dtpDel.Format = DateTimePickerFormat.Short;
             dtpDel.ImeMode = ImeMode.NoControl;
-            dtpDel.Location = new Point(149, 207);
+            dtpDel.Location = new Point(149, 245);
             dtpDel.Name = "dtpDel";
             dtpDel.Size = new Size(152, 30);
             dtpDel.TabIndex = 8;
@@ -135,7 +136,7 @@
             dtpAl.CustomFormat = "";
             dtpAl.Format = DateTimePickerFormat.Short;
             dtpAl.ImeMode = ImeMode.NoControl;
-            dtpAl.Location = new Point(367, 207);
+            dtpAl.Location = new Point(367, 245);
             dtpAl.Name = "dtpAl";
             dtpAl.Size = new Size(152, 30);
             dtpAl.TabIndex = 10;
@@ -144,7 +145,7 @@
             // lbl5
             // 
             lbl5.AutoSize = true;
-            lbl5.Location = new Point(364, 169);
+            lbl5.Location = new Point(364, 207);
             lbl5.Margin = new Padding(4, 0, 4, 0);
             lbl5.Name = "lbl5";
             lbl5.Size = new Size(33, 23);
@@ -153,7 +154,7 @@
             // 
             // btnBuscar
             // 
-            btnBuscar.Location = new Point(1321, 259);
+            btnBuscar.Location = new Point(149, 12);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(131, 48);
             btnBuscar.TabIndex = 11;
@@ -163,7 +164,7 @@
             // 
             // btnLimpiar
             // 
-            btnLimpiar.Location = new Point(1511, 259);
+            btnLimpiar.Location = new Point(1296, 344);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(131, 48);
             btnLimpiar.TabIndex = 12;
@@ -197,7 +198,7 @@
             dtpFinalizacion.CustomFormat = "HH:mm";
             dtpFinalizacion.Format = DateTimePickerFormat.Custom;
             dtpFinalizacion.ImeMode = ImeMode.NoControl;
-            dtpFinalizacion.Location = new Point(1383, 207);
+            dtpFinalizacion.Location = new Point(1383, 245);
             dtpFinalizacion.Name = "dtpFinalizacion";
             dtpFinalizacion.ShowUpDown = true;
             dtpFinalizacion.Size = new Size(152, 30);
@@ -207,7 +208,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(1380, 169);
+            label1.Location = new Point(1380, 207);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(192, 23);
@@ -219,7 +220,7 @@
             dtpInicio.CustomFormat = "HH:mm";
             dtpInicio.Format = DateTimePickerFormat.Custom;
             dtpInicio.ImeMode = ImeMode.NoControl;
-            dtpInicio.Location = new Point(1165, 207);
+            dtpInicio.Location = new Point(1165, 245);
             dtpInicio.Name = "dtpInicio";
             dtpInicio.ShowUpDown = true;
             dtpInicio.Size = new Size(152, 30);
@@ -229,7 +230,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(1162, 169);
+            label2.Location = new Point(1162, 207);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(137, 23);
@@ -239,7 +240,7 @@
             // cmbLugar
             // 
             cmbLugar.FormattingEnabled = true;
-            cmbLugar.Location = new Point(149, 323);
+            cmbLugar.Location = new Point(149, 361);
             cmbLugar.Name = "cmbLugar";
             cmbLugar.Size = new Size(370, 31);
             cmbLugar.TabIndex = 20;
@@ -248,7 +249,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(145, 297);
+            label3.Location = new Point(145, 335);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(60, 23);
@@ -258,7 +259,7 @@
             // cmbAnfitrion
             // 
             cmbAnfitrion.FormattingEnabled = true;
-            cmbAnfitrion.Location = new Point(661, 323);
+            cmbAnfitrion.Location = new Point(661, 361);
             cmbAnfitrion.Name = "cmbAnfitrion";
             cmbAnfitrion.Size = new Size(370, 31);
             cmbAnfitrion.TabIndex = 22;
@@ -266,7 +267,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(657, 297);
+            label4.Location = new Point(657, 335);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(170, 23);
@@ -276,7 +277,7 @@
             // cmbHorario
             // 
             cmbHorario.FormattingEnabled = true;
-            cmbHorario.Location = new Point(661, 206);
+            cmbHorario.Location = new Point(661, 244);
             cmbHorario.Name = "cmbHorario";
             cmbHorario.Size = new Size(370, 31);
             cmbHorario.TabIndex = 24;
@@ -285,7 +286,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(657, 180);
+            label5.Location = new Point(657, 218);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new Size(74, 23);

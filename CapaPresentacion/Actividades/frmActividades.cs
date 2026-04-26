@@ -45,6 +45,14 @@ namespace CapaPresentacion
             label1.Visible = false;
             label2.Visible = false;
 
+
+            // Ocultar al inicio
+            txtBuscar.Visible = false;
+            lbl1.Visible = false; // lbl1 — cambia por el nombre real
+            lbl5.Visible = false; // lbl5 — cambia por el nombre real  
+            dtpAl.Visible = false;
+
+
             // Muestra todas las actividades al abrir
             MostrarTodas();
 
@@ -174,14 +182,13 @@ namespace CapaPresentacion
             cmbAnfitrion.DisplayMember = "Nombres";
             cmbAnfitrion.ValueMember = "ID";
 
-            // cmbHorario — con fila vacía al inicio
+            // cmbHorario — SIN fila vacía, todas son opciones válidas
             DataTable dtDuracion = objNeg.MostrarTiposDuracion();
-            dtDuracion.Rows.InsertAt(dtDuracion.NewRow(), 0);
             cmbHorario.DataSource = null;
             cmbHorario.DataSource = dtDuracion;
             cmbHorario.DisplayMember = "Descripcion";
             cmbHorario.ValueMember = "ID";
-            cmbHorario.SelectedIndex = 0;
+            cmbHorario.SelectedIndex = 0; // selecciona la primera (Hora, ID=1)
 
         }
 
@@ -280,9 +287,23 @@ namespace CapaPresentacion
         }
 
         //btnBuscar
+
+        private bool filtrosVisibles = false;
+
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            Buscar();
+            filtrosVisibles = !filtrosVisibles;
+
+            // Solo muestra/oculta estos 5 controles
+            lbl1.Visible = filtrosVisibles; // Buscar
+            txtBuscar.Visible = filtrosVisibles;
+            lbl5.Visible = filtrosVisibles; // Al
+            dtpAl.Visible = filtrosVisibles;
+
+            // btnNuevaActividad se oculta cuando los filtros están visibles
+            btnNuevaActividad.Visible = !filtrosVisibles;
+
+            btnBuscar.Text = filtrosVisibles ? "🔼 Ocultar" : "🔍 Buscar";
         }
 
 
@@ -363,12 +384,12 @@ namespace CapaPresentacion
             if (dtpInicio.Visible && dtpInicio.Value.TimeOfDay >= dtpFinalizacion.Value.TimeOfDay)
             { MessageBox.Show("La hora de inicio debe ser menor a la hora de finalización.", "Aviso"); return; }
 
-            // 1. Leer valores básicos
+            // Leer valores
             int idTipo = (int)cmbTipo.SelectedValue;
             int idMinisterio = (int)cmbMinisterio.SelectedValue;
             int idLugar = (int)cmbLugar.SelectedValue;
-            int? idTipoDuracion = (cmbHorario.SelectedValue is int d) ? d : (int?)null;
-            int? idAnfitrion = (cmbAnfitrion.Visible && cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
+            int idTipoDuracion = (int)cmbHorario.SelectedValue;  // ← ahora es int directo, nunca null
+            int? idAnfitrion = (cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
 
             // 2. Lógica Refinada para las Horas
             TimeSpan? horaInicio = null;
@@ -381,34 +402,34 @@ namespace CapaPresentacion
                 horaFin = dtpFinalizacion.Value.TimeOfDay;
             }
 
+
             try
             {
                 // 3. Llamada al Negocio
                 objNeg.InsertarActividad(
-                    idMinisterio,
-                    idTipo,
-                    dtpDel.Value.Date, // Asegúrate de que dtpDel sea el de la fecha de la actividad
+                    idMinisterio, idTipo,
+                    dtpDel.Value.Date,
                     idTipoDuracion,
-                    horaInicio,
-                    horaFin,
-                    idLugar,
-                    idAnfitrion
+                    horaInicio, horaFin,
+                    idLugar, idAnfitrion
                 );
-
-                MessageBox.Show("✅ Actividad guardada correctamente.", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Limpieza y refresco
-                btnNuevaActividad.Text = "Nueva Actividad";
-                btnNuevaActividad.Tag = null;
-                MostrarTodas();
             }
             catch (Exception ex)
             {
-                // El error probablemente viene de aquí si los parámetros no aceptan nulos
                 MessageBox.Show("❌ Error al guardar: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            // Primero resetea el botón
+            btnNuevaActividad.Text = "Nueva Actividad";
+            btnNuevaActividad.Tag = null;
+
+            // Luego muestra el mensaje
+            MessageBox.Show("✅ Actividad guardada correctamente.", "Éxito",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Al último refresca el grid
+            MostrarTodas();
         }
 
         //cmbHorario
@@ -425,13 +446,7 @@ namespace CapaPresentacion
                 label1.Visible = requiereHora;
                 label2.Visible = requiereHora;
             }
-            else
-            {
-                dtpInicio.Visible = false;
-                dtpFinalizacion.Visible = false;
-                label1.Visible = false;
-                label2.Visible = false;
-            }
+
         }
 
         private void dg1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -463,5 +478,25 @@ namespace CapaPresentacion
                 label4.Visible = false;
             }
         }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+            {
+                MostrarTodas();
+            }
+            else
+            {
+                DataTable dt = objNeg.BuscarActividades(
+                    txtBuscar.Text,
+                    null, null, null, null,
+                    new DateTime(2000, 1, 1),
+                    new DateTime(2099, 12, 31),
+                    null, null
+                );
+                MostrarAgrupado(dt);
+            }
+        }
+
     }
 }
