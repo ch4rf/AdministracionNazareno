@@ -25,6 +25,21 @@ namespace CapaPresentacion.Membresia
             CargarGrilla();
             CargarCatalogosIngreso();
             formato();
+            formatoFechasNull();
+
+        }
+
+        private void formatoFechasNull()
+        {
+            dtpFechaBautismo.Format = DateTimePickerFormat.Custom;
+            dtpFechaBautismo.CustomFormat = " ";
+            dtpFechaNacimiento.Format = DateTimePickerFormat.Custom;
+            dtpFechaNacimiento.CustomFormat = " ";
+            dtpFechaRecepcion.Format = DateTimePickerFormat.Custom;
+            dtpFechaRecepcion.CustomFormat = " ";
+            dtpFechaRetiro.Format = DateTimePickerFormat.Custom;
+            dtpFechaRetiro.CustomFormat = " ";
+
         }
 
         private void formato()
@@ -108,19 +123,28 @@ namespace CapaPresentacion.Membresia
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             idMiembroSeleccionado = 0;
-            gbEDITABLES.Enabled = false;
+            gbEDITABLES.Enabled = true;
             btnLimpiar.Enabled = true;
             btnLimpiar.Visible = true;
             LimpiarFormulario();
+            formatoFechasNull();
             tabMembresia.SelectedIndex = 1; // Pestaña de Registro
             btnGuardar.Text = "Guardar Nuevo";
+            dtpFechaRetiro.Enabled = false;
+            cmbMotivoRetiro.Enabled = false;
+            cmbEstado.Enabled = false;
+            cmbEstado.SelectedIndex = 0;
         }
 
-        // =========================================================
-        // DOBLE CLIC EN LA GRILLA (EDICIÓN)
-        // =========================================================
+      
         private void dgMiembros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            formatoFechasNull();
+            cmbMotivoRetiro.Enabled = true;
+            cmbEstado.Enabled = true;
+            dtpFechaRetiro.Enabled = true;
+            chkEsExistente.Enabled = false;
+            chkEsExistente.Visible = false;
             gbEDITABLES.Enabled = true;
             btnGuardar.Text = "Actualizar";
             btnLimpiar.Enabled = false;
@@ -161,10 +185,33 @@ namespace CapaPresentacion.Membresia
                     if (fila["Rol_Familiar"] != DBNull.Value) cmbRolFamiliar.Text = fila["Rol_Familiar"].ToString();
 
                     // Calendarios
-                    if (fila["Fecha_Nacimiento"] != DBNull.Value) dtpFechaNacimiento.Value = Convert.ToDateTime(fila["Fecha_Nacimiento"]);
-                    if (fila["Fecha_Bautismo"] != DBNull.Value) dtpFechaBautismo.Value = Convert.ToDateTime(fila["Fecha_Bautismo"]);
-                    if (fila["Fecha_Recepcion"] != DBNull.Value) dtpFechaRecepcion.Value = Convert.ToDateTime(fila["Fecha_Recepcion"]);
-                    if (fila["Fecha_Retiro"] != DBNull.Value) dtpFechaRetiro.Value = Convert.ToDateTime(fila["Fecha_Retiro"]);
+                    if (fila["Fecha_Nacimiento"] != DBNull.Value)
+                    {
+                        dtpFechaNacimiento.Format = DateTimePickerFormat.Long;
+                        dtpFechaNacimiento.CustomFormat = null;
+                        dtpFechaNacimiento.Value = Convert.ToDateTime(fila["Fecha_Nacimiento"]);
+                    }
+
+                    if (fila["Fecha_Bautismo"] != DBNull.Value)
+                    {
+                        dtpFechaBautismo.Format = DateTimePickerFormat.Long;
+                        dtpFechaBautismo.CustomFormat = null;
+                        dtpFechaBautismo.Value = Convert.ToDateTime(fila["Fecha_Bautismo"]);
+                    }
+
+                    if (fila["Fecha_Recepcion"] != DBNull.Value)
+                    {
+                        dtpFechaRecepcion.Format = DateTimePickerFormat.Long;
+                        dtpFechaRecepcion.CustomFormat = null;
+                        dtpFechaRecepcion.Value = Convert.ToDateTime(fila["Fecha_Recepcion"]);
+                    }
+
+                    if (fila["Fecha_Retiro"] != DBNull.Value)
+                    {
+                        dtpFechaRetiro.Format = DateTimePickerFormat.Long;
+                        dtpFechaRetiro.CustomFormat = null;
+                        dtpFechaRetiro.Value = Convert.ToDateTime(fila["Fecha_Retiro"]);
+                    }
                 }
 
                 tabMembresia.SelectedIndex = 1; // Ir al formulario
@@ -200,6 +247,11 @@ namespace CapaPresentacion.Membresia
                 int idMot = cmbMotivoRetiro.SelectedIndex > -1 ? Convert.ToInt32(cmbMotivoRetiro.SelectedValue) : 0;
                 int idAse = cmbAsentamiento.SelectedIndex > -1 ? Convert.ToInt32(cmbAsentamiento.SelectedValue) : 0;
 
+                DateTime? fechaNac = (dtpFechaNacimiento.CustomFormat == " ") ? (DateTime?)null : dtpFechaNacimiento.Value;
+                DateTime? fechaBau = (dtpFechaBautismo.CustomFormat == " ") ? (DateTime?)null : dtpFechaBautismo.Value;
+                DateTime? fechaRec = (dtpFechaRecepcion.CustomFormat == " ") ? (DateTime?)null : dtpFechaRecepcion.Value;
+                DateTime? fechaRet = (dtpFechaRetiro.CustomFormat == " ") ? (DateTime?)null : dtpFechaRetiro.Value;
+
                 // Extraer el texto del Rol Familiar (Como este no usa ID, guardamos el texto directo)
                 string rol = cmbRolFamiliar.Text;
 
@@ -209,9 +261,9 @@ namespace CapaPresentacion.Membresia
                     // MODO INSERTAR (Enviamos los 19 Parámetros a la Capa de Negocio)
                     objMiembros.InsertarMiembro(
                         idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
-                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
-                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
-                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        idGen, fechaNac, idProf, txtTelefono.Text,
+                        txtCorreo.Text, fechaBau, fechaRec,
+                        idRec, idEst, idMot, fechaRet, idAse,
                         txtCalleAvenida.Text, txtReferenciaCasa.Text
                     );
 
@@ -223,9 +275,9 @@ namespace CapaPresentacion.Membresia
                     objMiembros.EditarMiembro(
                         idMiembroSeleccionado, // <- El ID que atrapamos en el doble clic
                         idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
-                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
-                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
-                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        idGen, fechaNac, idProf, txtTelefono.Text,
+                        txtCorreo.Text, fechaBau, fechaRec,
+                        idRec, idEst, idMot, fechaRet, idAse,
                         txtCalleAvenida.Text, txtReferenciaCasa.Text
                     );
 
@@ -234,8 +286,11 @@ namespace CapaPresentacion.Membresia
 
                 // 4. ACCIONES FINALES POST-GUARDADO
                 LimpiarFormulario();            // Limpia todas las cajas de texto y combos
+                formatoFechasNull();           // Resetea los DateTimePickers a formato vacío
                 CargarGrilla();                 // Actualiza la tabla (DataGridView) para mostrar los cambios
-                gbEDITABLES.Enabled = false;
+                chkEsExistente.Enabled = true;         // Habilita el checkbox de "Es Existente" para futuras ediciones
+                chkEsExistente.Visible = true;         // Asegura que el checkbox sea visible
+                chkEsExistente.Checked = false;        // Resetea el checkbox de "Es Existente"
                 tabMembresia.SelectedIndex = 0; // Cambia la vista de regreso a la pestaña de la tabla
             }
             catch (Exception ex)
@@ -295,14 +350,19 @@ namespace CapaPresentacion.Membresia
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
+            formatoFechasNull();
             gbEDITABLES.Enabled = false;
             tabMembresia.SelectedIndex = 0; // Volver a la pestaña de la tabla
+            chkEsExistente.Enabled = true;         // Habilita el checkbox de "Es Existente" para futuras ediciones
+            chkEsExistente.Visible = true;         // Asegura que el checkbox sea visible
+            chkEsExistente.Checked = false;        // Resetea el checkbox de "Es Existente"
 
         }
 
         private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
             LimpiarFormulario();
+            formatoFechasNull();
         }
 
 
@@ -329,6 +389,47 @@ namespace CapaPresentacion.Membresia
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaNacimiento.Format = DateTimePickerFormat.Long;
+            dtpFechaNacimiento.CustomFormat = null; // Resetea el formato personalizado para mostrar la fecha normalmente
+        }
+
+        private void dtpFechaBautismo_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaBautismo.Format = DateTimePickerFormat.Long;
+            dtpFechaBautismo.CustomFormat = null; 
+        }
+
+        private void dtpFechaRecepcion_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaRecepcion.Format = DateTimePickerFormat.Long;
+            dtpFechaRecepcion.CustomFormat = null;
+        }
+
+        private void dtpFechaRetiro_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaRetiro.Format = DateTimePickerFormat.Long;
+            dtpFechaRetiro.CustomFormat = null;
+        }
+
+        private void chkEsExistente_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkEsExistente.Checked)
+            {
+                dtpFechaRetiro.Enabled = true;
+                cmbMotivoRetiro.Enabled = true;
+                cmbEstado.Enabled = true;
+
+            }
+            else
+            {
+                dtpFechaRetiro.Enabled = false;
+                cmbMotivoRetiro.Enabled = false;
+                cmbEstado.Enabled = false;
+            }
         }
     }
 }
