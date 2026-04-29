@@ -52,6 +52,7 @@
             label4 = new Label();
             cmbHorario = new ComboBox();
             label5 = new Label();
+            btnRegresar = new Button();
             ((System.ComponentModel.ISupportInitialize)dg1).BeginInit();
             SuspendLayout();
             // 
@@ -192,6 +193,7 @@
             dg1.Size = new Size(1626, 452);
             dg1.TabIndex = 14;
             dg1.CellContentClick += dg1_CellContentClick;
+            dg1.CellDoubleClick += dg1_CellDoubleClick;
             // 
             // dtpFinalizacion
             // 
@@ -293,11 +295,22 @@
             label5.TabIndex = 23;
             label5.Text = "Horario";
             // 
+            // btnRegresar
+            // 
+            btnRegresar.Location = new Point(552, 418);
+            btnRegresar.Name = "btnRegresar";
+            btnRegresar.Size = new Size(131, 48);
+            btnRegresar.TabIndex = 25;
+            btnRegresar.Text = "Regresar";
+            btnRegresar.UseVisualStyleBackColor = true;
+            btnRegresar.Click += btnRegresar_Click;
+            // 
             // frmActividades
             // 
             AutoScaleDimensions = new SizeF(11F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1011);
+            Controls.Add(btnRegresar);
             Controls.Add(cmbHorario);
             Controls.Add(label5);
             Controls.Add(cmbAnfitrion);
@@ -361,5 +374,6 @@
         private Label label4;
         private ComboBox cmbHorario;
         private Label label5;
+        private Button btnRegresar;
     }
 }

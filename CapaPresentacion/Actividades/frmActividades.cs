@@ -45,6 +45,7 @@ namespace CapaPresentacion
             label1.Visible = false;
             label2.Visible = false;
 
+            btnRegresar.Visible = false;
 
             // Ocultar al inicio
             txtBuscar.Visible = false;
@@ -184,6 +185,7 @@ namespace CapaPresentacion
 
             // cmbHorario — SIN fila vacía, todas son opciones válidas
             DataTable dtDuracion = objNeg.MostrarTiposDuracion();
+                dtDuracion.Rows.InsertAt(dtDuracion.NewRow(), 0);
             cmbHorario.DataSource = null;
             cmbHorario.DataSource = dtDuracion;
             cmbHorario.DisplayMember = "Descripcion";
@@ -330,6 +332,10 @@ namespace CapaPresentacion
             dtpFinalizacion.Value = DateTime.Today.AddHours(23).AddMinutes(59);
             // NO llama a Buscar() — el grid queda como estaba
             MostrarTodas();
+            label1.Visible = false;
+            label2.Visible = false;
+            dtpInicio.Visible = false;
+            dtpFinalizacion.Visible = false;
         }
 
         private void frmActividades_Click(object sender, EventArgs e)
@@ -340,13 +346,17 @@ namespace CapaPresentacion
         //btnNuevaActividad
         private void btnNuevaActividad_Click_v2(object sender, EventArgs e)
         {
+            btnRegresar.Visible = true;
             if (btnNuevaActividad.Tag?.ToString() == "guardando")
             {
                 GuardarActividad();
             }
+            else if (btnNuevaActividad.Tag?.ToString() == "editando")
+            {
+                GuardarEdicion();
+            }
             else
             {
-                // Limpia los campos para ingresar una nueva actividad
                 cmbTipo.SelectedIndex = 0;
                 cmbMinisterio.SelectedIndex = 0;
                 cmbLugar.SelectedIndex = 0;
@@ -368,6 +378,7 @@ namespace CapaPresentacion
         // ============================================================
         private void GuardarActividad()
         {
+            
             // Validaciones
             if (!(cmbTipo.SelectedValue is int))
             { MessageBox.Show("Selecciona un Tipo de Actividad.", "Aviso"); return; }
@@ -429,6 +440,63 @@ namespace CapaPresentacion
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Al último refresca el grid
+            MostrarTodas();
+        }
+
+
+        private void GuardarEdicion()
+        {
+            btnRegresar.Visible = true;
+            // Validaciones
+            if (!(cmbTipo.SelectedValue is int))
+            { MessageBox.Show("Selecciona un Tipo de Actividad.", "Aviso"); return; }
+
+            if (!(cmbMinisterio.SelectedValue is int))
+            { MessageBox.Show("Selecciona un Ministerio.", "Aviso"); return; }
+
+            if (!(cmbLugar.SelectedValue is int))
+            { MessageBox.Show("Selecciona un Lugar.", "Aviso"); return; }
+
+            if (!(cmbHorario.SelectedValue is int))
+            { MessageBox.Show("Selecciona un tipo de Horario.", "Aviso"); return; }
+
+            if (dtpInicio.Visible && dtpInicio.Value.TimeOfDay >= dtpFinalizacion.Value.TimeOfDay)
+            { MessageBox.Show("La hora de inicio debe ser menor a la hora de finalización.", "Aviso"); return; }
+
+            int idTipo = (int)cmbTipo.SelectedValue;
+            int idMinisterio = (int)cmbMinisterio.SelectedValue;
+            int idLugar = (int)cmbLugar.SelectedValue;
+            int idTipoDuracion = (int)cmbHorario.SelectedValue;
+            int? idAnfitrion = (cmbAnfitrion.SelectedValue is int a) ? a : (int?)null;
+
+            TimeSpan? horaInicio = dtpInicio.Visible ? dtpInicio.Value.TimeOfDay : (TimeSpan?)null;
+            TimeSpan? horaFin = dtpFinalizacion.Visible ? dtpFinalizacion.Value.TimeOfDay : (TimeSpan?)null;
+
+            try
+            {
+                objNeg.EditarActividad(
+                    idActividadEditando,
+                    idMinisterio, idTipo,
+                    dtpDel.Value.Date,
+                    idTipoDuracion,
+                    horaInicio, horaFin,
+                    idLugar, idAnfitrion
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Error al editar: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            btnNuevaActividad.Text = "Nueva Actividad";
+            btnNuevaActividad.Tag = null;
+            idActividadEditando = 0;
+
+            MessageBox.Show("✅ Actividad actualizada correctamente.", "Éxito",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             MostrarTodas();
         }
 
@@ -498,5 +566,150 @@ namespace CapaPresentacion
             }
         }
 
+        //evento doble click para editar el dg1
+        private int idActividadEditando = 0;
+        private void dg1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnRegresar.Visible = true;
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow fila = dg1.Rows[e.RowIndex];
+
+            // Si es fila de encabezado de fecha, ignorar
+            if (fila.Tag?.ToString() == "encabezado") return;
+
+            // Si la celda ID está vacía, ignorar
+            if (fila.Cells["colID"].Value == null || fila.Cells["colID"].Value.ToString() == "") return;
+
+            // Guardar el ID
+            idActividadEditando = Convert.ToInt32(fila.Cells["colID"].Value);
+
+            // ── Cargar fecha ──────────────────────────────────────────
+            if (fila.Cells["colFecha"].Value != null)
+                dtpDel.Value = Convert.ToDateTime(fila.Cells["colFecha"].Value);
+
+            // ── Cargar Tipo ───────────────────────────────────────────
+            string tipo = fila.Cells["colTipo"].Value?.ToString();
+            foreach (DataRowView drv in cmbTipo.Items)
+            {
+                if (drv.Row["Descripcion"]?.ToString() == tipo)
+                {
+                    cmbTipo.SelectedItem = drv;
+                    break;
+                }
+            }
+
+            // ── Cargar Ministerio ─────────────────────────────────────
+            string ministerio = fila.Cells["colMinisterio"].Value?.ToString();
+            foreach (DataRowView drv in cmbMinisterio.Items)
+            {
+                if (drv.Row["Nombre"]?.ToString() == ministerio)
+                {
+                    cmbMinisterio.SelectedItem = drv;
+                    break;
+                }
+            }
+
+            // ── Cargar Duración / Horario ─────────────────────────────
+            string duracion = fila.Cells["colDuracion"].Value?.ToString();
+            foreach (DataRowView drv in cmbHorario.Items)
+            {
+                if (drv.Row["Descripcion"]?.ToString() == duracion)
+                {
+                    cmbHorario.SelectedItem = drv;
+                    break;
+                }
+            }
+
+            // ── Cargar Horas si están disponibles ─────────────────────
+            if (fila.Cells["colHoraInicio"].Value != null &&
+                fila.Cells["colHoraInicio"].Value.ToString() != "")
+            {
+                TimeSpan horaInicio = TimeSpan.Parse(fila.Cells["colHoraInicio"].Value.ToString());
+                dtpInicio.Value = DateTime.Today.Add(horaInicio);
+            }
+
+            if (fila.Cells["colHoraFin"].Value != null &&
+                fila.Cells["colHoraFin"].Value.ToString() != "")
+            {
+                TimeSpan horaFin = TimeSpan.Parse(fila.Cells["colHoraFin"].Value.ToString());
+                dtpFinalizacion.Value = DateTime.Today.Add(horaFin);
+            }
+
+            // ── Cargar Lugar ──────────────────────────────────────────
+            string lugar = fila.Cells["colLugar"].Value?.ToString();
+            foreach (DataRowView drv in cmbLugar.Items)
+            {
+                if (drv.Row["Nombre"]?.ToString() == lugar)
+                {
+                    cmbLugar.SelectedItem = drv;
+                    break;
+                }
+            }
+
+            // ── Cargar Anfitrión ──────────────────────────────────────
+            string anfitrion = fila.Cells["colAnfitrion"].Value?.ToString();
+            if (anfitrion != "Sin anfitrión" && anfitrion != "")
+            {
+                foreach (DataRowView drv in cmbAnfitrion.Items)
+                {
+                    if (drv.Row["Nombres"]?.ToString() == anfitrion)
+                    {
+                        cmbAnfitrion.SelectedItem = drv;
+                        break;
+                    }
+                }
+            }
+
+            // ── Cambiar botón a modo editar ───────────────────────────
+            btnNuevaActividad.Text = "💾 Guardar Cambios";
+            btnNuevaActividad.Tag = "editando";
+            btnNuevaActividad.Visible = true;
+        }
+
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            // Limpiar campos
+            txtBuscar.Clear();
+            cmbTipo.SelectedIndex = 0;
+            cmbMinisterio.SelectedIndex = 0;
+            cmbLugar.SelectedIndex = 0;
+            cmbAnfitrion.SelectedIndex = 0;
+            cmbHorario.SelectedIndex = 0;
+            dtpDel.Value = DateTime.Today;
+            dtpAl.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month,
+                                    DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
+            dtpInicio.Value = DateTime.Today;
+            dtpFinalizacion.Value = DateTime.Today.AddHours(23).AddMinutes(59);
+
+            // Resetear variable de edición
+            idActividadEditando = 0;
+
+            // Resetear botón Nueva Actividad
+            btnNuevaActividad.Text = "Nueva Actividad";
+            btnNuevaActividad.Tag = null;
+            btnNuevaActividad.Visible = true;
+
+            // Resetear btnBuscar
+            filtrosVisibles = false;
+            btnBuscar.Text = "🔍 Buscar";
+
+            // Ocultar todo lo que inicia oculto
+            lbl1.Visible = false;
+            txtBuscar.Visible = false;
+            lbl5.Visible = false;
+            dtpAl.Visible = false;
+            dtpInicio.Visible = false;
+            dtpFinalizacion.Visible = false;
+            label1.Visible = false;
+            label2.Visible = false;
+            cmbAnfitrion.Visible = false;
+            label4.Visible = false;
+
+            // Refrescar el grid con todas las actividades
+            MostrarTodas();
+
+            btnRegresar.Visible = false;
+        }
     }
 }

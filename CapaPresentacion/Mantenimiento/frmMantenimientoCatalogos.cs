@@ -69,6 +69,7 @@ namespace CapaPresentacion.Mantenimiento
                     dgDatos.DataSource = logica.MostrarTiposDuracion();
                 }
 
+
                 // ... (agregar los demás else if)
 
                 // Limpiamos la caja de texto cada vez que cambiamos de tabla
@@ -207,6 +208,7 @@ namespace CapaPresentacion.Mantenimiento
                         MessageBox.Show("Horario actualizado.");
                     }
                 }
+                
 
                 // Refrescamos la tabla y limpiamos el texto
                 ActualizarGrilla();
@@ -269,6 +271,7 @@ namespace CapaPresentacion.Mantenimiento
                         CN_Actividades logica = new CN_Actividades();
                         logica.EliminarTipoDuracion(Convert.ToInt32(idSeleccionado));
                     }
+                   
 
                     MessageBox.Show("Registro eliminado.");
                     ActualizarGrilla();

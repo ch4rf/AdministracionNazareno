@@ -67,27 +67,6 @@ namespace CapaNegocio
 
         public void EliminarTipoDuracion(int id)
             => objDatos.EliminarTipoDuracion(id);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 }
