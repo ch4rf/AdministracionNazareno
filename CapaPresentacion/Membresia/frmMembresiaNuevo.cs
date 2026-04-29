@@ -50,6 +50,10 @@ namespace CapaPresentacion.Membresia
                 dgMiembros.Columns[0].Visible = false;
                 dgMiembros.Columns[1].Width = 150; // Nombres
             }
+            cmbFamilia.Enabled = false;
+            cmbFamilia.Visible = false;
+            cmbRolFamiliar.Enabled = false;
+            cmbRolFamiliar.Visible = false;
         }
 
         private void CargarGrilla()
@@ -136,7 +140,7 @@ namespace CapaPresentacion.Membresia
             cmbEstado.SelectedIndex = 0;
         }
 
-      
+
         private void dgMiembros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             formatoFechasNull();
@@ -400,7 +404,7 @@ namespace CapaPresentacion.Membresia
         private void dtpFechaBautismo_ValueChanged(object sender, EventArgs e)
         {
             dtpFechaBautismo.Format = DateTimePickerFormat.Long;
-            dtpFechaBautismo.CustomFormat = null; 
+            dtpFechaBautismo.CustomFormat = null;
         }
 
         private void dtpFechaRecepcion_ValueChanged(object sender, EventArgs e)
@@ -430,6 +434,25 @@ namespace CapaPresentacion.Membresia
                 cmbMotivoRetiro.Enabled = false;
                 cmbEstado.Enabled = false;
             }
+        }
+
+        private void dgMiembros_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            // Creamos el número correlativo (el índice de la fila + 1)
+            string numero = (e.RowIndex + 1).ToString();
+
+            // Definimos el formato: centrado y ajustado al encabezado
+            var centerFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            // Calculamos el área donde se dibujará el número (el RowHeader)
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgMiembros.RowHeadersWidth, e.RowBounds.Height);
+
+            // Dibujamos el texto usando la fuente actual del DataGridView
+            e.Graphics.DrawString(numero, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }
