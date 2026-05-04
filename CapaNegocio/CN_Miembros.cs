@@ -1,6 +1,8 @@
 ﻿using CapaDatos;
+using System;
+using System.Collections.Generic;
 using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text;
 
 namespace CapaNegocio
 {
@@ -28,29 +30,47 @@ namespace CapaNegocio
             objDatos.EditarMiembro(idMiembro, idFamilia, rolFamiliar, dpi, nombres, apellidos, idGenero, fechaNacimiento, idProfesion, telefono, correo, fechaBautismo, fechaRecepcion, idRecepcion, idEstado, idMotivoRetiro, fechaRetiro, idAsentamiento, calleAvenida, referenciaCasa);
         }
 
-        // --- Metodos nuevos adami de aqui para abajo
-        public DataTable BuscarMiembrosSinFamilia(string ape1, string ape2, string nombre)
+        public DataTable ObtenerEstado()
         {
-            // Si el buscador está vacío, podemos retornar una tabla vacía o todos los huérfanos
-            return objDatos.BuscarMiembrosHuerfanos(ape1, ape2, nombre);
+            return objDatos.ObtenerEstadoMiembro();
         }
 
-        public void VincularMiembroAFamilia(int idMiembro, int idFamilia)
+        public DataTable ObtenerMinisterios()
         {
-            // Aquí podrías validar que los IDs sean mayores a 0
-            if (idMiembro > 0 && idFamilia > 0)
-            {
-                objDatos.AsignarFamilia(idMiembro, idFamilia);
-            }
-            else
-            {
-                throw new Exception("IDs no válidos para la asignación.");
-            }
+            return objDatos.ObtenerMinisterios();
         }
-        public DataTable FiltrarMiembrosPorFamilia(int idFam)
+
+        public DataTable ObtenerGeneros()
         {
-            // Ahora objDatos sí encontrará el método ListarMiembrosPorFamilia
-            return objDatos.ListarMiembrosPorFamilia(idFam);
+            return objDatos.ObtenerGeneros();
+        }
+
+        public DataTable ObtenerTiposRecepcion()
+        {
+            return objDatos.ObtenerTiposRecepcion();
+        }
+
+        public DataTable ObtenerAsentamientos()
+        {
+            return objDatos.ObtenerAsentamientos();
+        }
+        public DataTable ObtenerProfesiones()
+        {
+            return objDatos.ObtenerProfesiones();
+        }
+
+        public DataTable ObtenerFamilias()
+        {
+            return objDatos.ObtenerFamilias();
+        }
+
+        public DataTable ObtenerMotivosRetiro()
+        {
+            return objDatos.ObtenerMotivosRetiro();
+        }
+        public DataTable BuscarMiembroPorNombre(string nombre)
+        {
+            return objDatos.BuscarMiembroPorNombre(nombre);
         }
     }
 }

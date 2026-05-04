@@ -1,5 +1,11 @@
 ﻿using CapaNegocio;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
 
 namespace CapaPresentacion.Membresia
 {
@@ -17,8 +23,23 @@ namespace CapaPresentacion.Membresia
         private void frmMembresiaNuevo_Load(object sender, EventArgs e)
         {
             CargarGrilla();
-            CargarCatalogos(); // Llena los ComboBoxes al iniciar
+            CargarCatalogosIngreso();
             formato();
+            formatoFechasNull();
+
+        }
+
+        private void formatoFechasNull()
+        {
+            dtpFechaBautismo.Format = DateTimePickerFormat.Custom;
+            dtpFechaBautismo.CustomFormat = " ";
+            dtpFechaNacimiento.Format = DateTimePickerFormat.Custom;
+            dtpFechaNacimiento.CustomFormat = " ";
+            dtpFechaRecepcion.Format = DateTimePickerFormat.Custom;
+            dtpFechaRecepcion.CustomFormat = " ";
+            dtpFechaRetiro.Format = DateTimePickerFormat.Custom;
+            dtpFechaRetiro.CustomFormat = " ";
+
         }
 
         private void formato()
@@ -29,6 +50,10 @@ namespace CapaPresentacion.Membresia
                 dgMiembros.Columns[0].Visible = false;
                 dgMiembros.Columns[1].Width = 150; // Nombres
             }
+            cmbFamilia.Enabled = false;
+            cmbFamilia.Visible = false;
+            cmbRolFamiliar.Enabled = false;
+            cmbRolFamiliar.Visible = false;
         }
 
         private void CargarGrilla()
@@ -43,21 +68,56 @@ namespace CapaPresentacion.Membresia
             }
         }
 
-        private void CargarCatalogos()
+
+        private void CargarCatalogosIngreso()
         {
             try
             {
-                /* NOTA: Aquí debes llamar a tus otros métodos de la Capa Negocio 
-                   para llenar cada ComboBox. Ejemplo:
-                   
-                   cmbGenero.DataSource = objCatalogos.MostrarGeneros();
-                   cmbGenero.DisplayMember = "Descripcion";
-                   cmbGenero.ValueMember = "ID";
-                */
+
+
+                cmbMotivoRetiro.DataSource = objMiembros.ObtenerMotivosRetiro();
+                cmbMotivoRetiro.DisplayMember = "Descripcion";
+                cmbMotivoRetiro.ValueMember = "ID";
+
+                cmbFamilia.DataSource = objMiembros.ObtenerFamilias();
+                cmbFamilia.DisplayMember = "Nombre_Familia";
+                cmbFamilia.ValueMember = "ID_Familia";
+
+                cmbProfesion.DataSource = objMiembros.ObtenerProfesiones();
+                cmbProfesion.DisplayMember = "Descripcion";
+                cmbProfesion.ValueMember = "ID";
+
+                cmbAsentamiento.DataSource = objMiembros.ObtenerAsentamientos();
+                cmbAsentamiento.DisplayMember = "Nombre";
+                cmbAsentamiento.ValueMember = "ID_Asentamiento";
+
+                cmbTipoRecepcion.DataSource = objMiembros.ObtenerTiposRecepcion();
+                cmbTipoRecepcion.DisplayMember = "Descripcion";
+                cmbTipoRecepcion.ValueMember = "ID";
+
+
+
+                cmbGenero.DataSource = objMiembros.ObtenerGeneros();
+                cmbGenero.DisplayMember = "Descripcion";
+                cmbGenero.ValueMember = "ID_Genero";
+
+                cmbEstado.DataSource = objMiembros.ObtenerEstado();
+                cmbEstado.DisplayMember = "Descripcion";
+                cmbEstado.ValueMember = "ID_Estado";
+
+                cmbGenero.SelectedIndex = -1;
+                cmbTipoRecepcion.SelectedIndex = -1;
+                cmbEstado.SelectedIndex = -1;
+                cmbMotivoRetiro.SelectedIndex = -1;
+                cmbProfesion.SelectedIndex = -1;
+                cmbFamilia.SelectedIndex = -1;
+                cmbAsentamiento.SelectedIndex = -1;
+
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar listas desplegables: " + ex.Message);
+                MessageBox.Show("Error al cargar los catálogos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -67,15 +127,32 @@ namespace CapaPresentacion.Membresia
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             idMiembroSeleccionado = 0;
+            gbEDITABLES.Enabled = true;
+            btnLimpiar.Enabled = true;
+            btnLimpiar.Visible = true;
             LimpiarFormulario();
+            formatoFechasNull();
             tabMembresia.SelectedIndex = 1; // Pestaña de Registro
+            btnGuardar.Text = "Guardar Nuevo";
+            dtpFechaRetiro.Enabled = false;
+            cmbMotivoRetiro.Enabled = false;
+            cmbEstado.Enabled = false;
+            cmbEstado.SelectedIndex = 0;
         }
 
-        // =========================================================
-        // DOBLE CLIC EN LA GRILLA (EDICIÓN)
-        // =========================================================
+
         private void dgMiembros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            formatoFechasNull();
+            cmbMotivoRetiro.Enabled = true;
+            cmbEstado.Enabled = true;
+            dtpFechaRetiro.Enabled = true;
+            chkEsExistente.Enabled = false;
+            chkEsExistente.Visible = false;
+            gbEDITABLES.Enabled = true;
+            btnGuardar.Text = "Actualizar";
+            btnLimpiar.Enabled = false;
+            btnLimpiar.Visible = false;
             if (e.RowIndex < 0) return;
 
             try
@@ -112,10 +189,33 @@ namespace CapaPresentacion.Membresia
                     if (fila["Rol_Familiar"] != DBNull.Value) cmbRolFamiliar.Text = fila["Rol_Familiar"].ToString();
 
                     // Calendarios
-                    if (fila["Fecha_Nacimiento"] != DBNull.Value) dtpFechaNacimiento.Value = Convert.ToDateTime(fila["Fecha_Nacimiento"]);
-                    if (fila["Fecha_Bautismo"] != DBNull.Value) dtpFechaBautismo.Value = Convert.ToDateTime(fila["Fecha_Bautismo"]);
-                    if (fila["Fecha_Recepcion"] != DBNull.Value) dtpFechaRecepcion.Value = Convert.ToDateTime(fila["Fecha_Recepcion"]);
-                    if (fila["Fecha_Retiro"] != DBNull.Value) dtpFechaRetiro.Value = Convert.ToDateTime(fila["Fecha_Retiro"]);
+                    if (fila["Fecha_Nacimiento"] != DBNull.Value)
+                    {
+                        dtpFechaNacimiento.Format = DateTimePickerFormat.Long;
+                        dtpFechaNacimiento.CustomFormat = null;
+                        dtpFechaNacimiento.Value = Convert.ToDateTime(fila["Fecha_Nacimiento"]);
+                    }
+
+                    if (fila["Fecha_Bautismo"] != DBNull.Value)
+                    {
+                        dtpFechaBautismo.Format = DateTimePickerFormat.Long;
+                        dtpFechaBautismo.CustomFormat = null;
+                        dtpFechaBautismo.Value = Convert.ToDateTime(fila["Fecha_Bautismo"]);
+                    }
+
+                    if (fila["Fecha_Recepcion"] != DBNull.Value)
+                    {
+                        dtpFechaRecepcion.Format = DateTimePickerFormat.Long;
+                        dtpFechaRecepcion.CustomFormat = null;
+                        dtpFechaRecepcion.Value = Convert.ToDateTime(fila["Fecha_Recepcion"]);
+                    }
+
+                    if (fila["Fecha_Retiro"] != DBNull.Value)
+                    {
+                        dtpFechaRetiro.Format = DateTimePickerFormat.Long;
+                        dtpFechaRetiro.CustomFormat = null;
+                        dtpFechaRetiro.Value = Convert.ToDateTime(fila["Fecha_Retiro"]);
+                    }
                 }
 
                 tabMembresia.SelectedIndex = 1; // Ir al formulario
@@ -131,6 +231,7 @@ namespace CapaPresentacion.Membresia
         // =========================================================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            btnGuardar.Text = "Guardar Nuevo";
             // 1. VALIDACIÓN BÁSICA: Asegurarnos de que no dejen en blanco el nombre o apellido
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtApellidos.Text))
             {
@@ -150,6 +251,11 @@ namespace CapaPresentacion.Membresia
                 int idMot = cmbMotivoRetiro.SelectedIndex > -1 ? Convert.ToInt32(cmbMotivoRetiro.SelectedValue) : 0;
                 int idAse = cmbAsentamiento.SelectedIndex > -1 ? Convert.ToInt32(cmbAsentamiento.SelectedValue) : 0;
 
+                DateTime? fechaNac = (dtpFechaNacimiento.CustomFormat == " ") ? (DateTime?)null : dtpFechaNacimiento.Value;
+                DateTime? fechaBau = (dtpFechaBautismo.CustomFormat == " ") ? (DateTime?)null : dtpFechaBautismo.Value;
+                DateTime? fechaRec = (dtpFechaRecepcion.CustomFormat == " ") ? (DateTime?)null : dtpFechaRecepcion.Value;
+                DateTime? fechaRet = (dtpFechaRetiro.CustomFormat == " ") ? (DateTime?)null : dtpFechaRetiro.Value;
+
                 // Extraer el texto del Rol Familiar (Como este no usa ID, guardamos el texto directo)
                 string rol = cmbRolFamiliar.Text;
 
@@ -159,9 +265,9 @@ namespace CapaPresentacion.Membresia
                     // MODO INSERTAR (Enviamos los 19 Parámetros a la Capa de Negocio)
                     objMiembros.InsertarMiembro(
                         idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
-                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
-                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
-                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        idGen, fechaNac, idProf, txtTelefono.Text,
+                        txtCorreo.Text, fechaBau, fechaRec,
+                        idRec, idEst, idMot, fechaRet, idAse,
                         txtCalleAvenida.Text, txtReferenciaCasa.Text
                     );
 
@@ -173,9 +279,9 @@ namespace CapaPresentacion.Membresia
                     objMiembros.EditarMiembro(
                         idMiembroSeleccionado, // <- El ID que atrapamos en el doble clic
                         idFam, rol, txtDPI.Text, txtNombre.Text, txtApellidos.Text,
-                        idGen, dtpFechaNacimiento.Value, idProf, txtTelefono.Text,
-                        txtCorreo.Text, dtpFechaBautismo.Value, dtpFechaRecepcion.Value,
-                        idRec, idEst, idMot, dtpFechaRetiro.Value, idAse,
+                        idGen, fechaNac, idProf, txtTelefono.Text,
+                        txtCorreo.Text, fechaBau, fechaRec,
+                        idRec, idEst, idMot, fechaRet, idAse,
                         txtCalleAvenida.Text, txtReferenciaCasa.Text
                     );
 
@@ -184,7 +290,11 @@ namespace CapaPresentacion.Membresia
 
                 // 4. ACCIONES FINALES POST-GUARDADO
                 LimpiarFormulario();            // Limpia todas las cajas de texto y combos
+                formatoFechasNull();           // Resetea los DateTimePickers a formato vacío
                 CargarGrilla();                 // Actualiza la tabla (DataGridView) para mostrar los cambios
+                chkEsExistente.Enabled = true;         // Habilita el checkbox de "Es Existente" para futuras ediciones
+                chkEsExistente.Visible = true;         // Asegura que el checkbox sea visible
+                chkEsExistente.Checked = false;        // Resetea el checkbox de "Es Existente"
                 tabMembresia.SelectedIndex = 0; // Cambia la vista de regreso a la pestaña de la tabla
             }
             catch (Exception ex)
@@ -192,15 +302,12 @@ namespace CapaPresentacion.Membresia
                 // Si ocurre un error a nivel de Base de Datos o conexión, lo mostramos aquí
                 MessageBox.Show("Ocurrió un error al guardar: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         // =========================================================
         // BOTÓN LIMPIAR
         // =========================================================
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarFormulario();
-        }
 
         private void LimpiarFormulario()
         {
@@ -230,6 +337,122 @@ namespace CapaPresentacion.Membresia
         private void dgMiembros_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                dgMiembros.DataSource = objMiembros.BuscarMiembroPorNombre(txtBuscarNombre.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            formatoFechasNull();
+            gbEDITABLES.Enabled = false;
+            tabMembresia.SelectedIndex = 0; // Volver a la pestaña de la tabla
+            chkEsExistente.Enabled = true;         // Habilita el checkbox de "Es Existente" para futuras ediciones
+            chkEsExistente.Visible = true;         // Asegura que el checkbox sea visible
+            chkEsExistente.Checked = false;        // Resetea el checkbox de "Es Existente"
+
+        }
+
+        private void btnLimpiar_Click_1(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            formatoFechasNull();
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CargarGrilla();
+        }
+
+        private void tabopage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabMembresia_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+
+        }
+
+        private void gbEDITABLES_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaNacimiento.Format = DateTimePickerFormat.Long;
+            dtpFechaNacimiento.CustomFormat = null; // Resetea el formato personalizado para mostrar la fecha normalmente
+        }
+
+        private void dtpFechaBautismo_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaBautismo.Format = DateTimePickerFormat.Long;
+            dtpFechaBautismo.CustomFormat = null;
+        }
+
+        private void dtpFechaRecepcion_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaRecepcion.Format = DateTimePickerFormat.Long;
+            dtpFechaRecepcion.CustomFormat = null;
+        }
+
+        private void dtpFechaRetiro_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFechaRetiro.Format = DateTimePickerFormat.Long;
+            dtpFechaRetiro.CustomFormat = null;
+        }
+
+        private void chkEsExistente_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkEsExistente.Checked)
+            {
+                dtpFechaRetiro.Enabled = true;
+                cmbMotivoRetiro.Enabled = true;
+                cmbEstado.Enabled = true;
+
+            }
+            else
+            {
+                dtpFechaRetiro.Enabled = false;
+                cmbMotivoRetiro.Enabled = false;
+                cmbEstado.Enabled = false;
+            }
+        }
+
+        private void dgMiembros_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            // Creamos el número correlativo (el índice de la fila + 1)
+            string numero = (e.RowIndex + 1).ToString();
+
+            // Definimos el formato: centrado y ajustado al encabezado
+            var centerFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            // Calculamos el área donde se dibujará el número (el RowHeader)
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgMiembros.RowHeadersWidth, e.RowBounds.Height);
+
+            // Dibujamos el texto usando la fuente actual del DataGridView
+            e.Graphics.DrawString(numero, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }

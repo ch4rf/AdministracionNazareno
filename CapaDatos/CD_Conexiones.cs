@@ -1,4 +1,8 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
 
 
 namespace CapaDatos
@@ -17,7 +21,7 @@ namespace CapaDatos
         {
             //Inicializamos nuestras variables privadas
             this.Base = "IglesiaBD";
-            this.servidor = @"(localdb)\MSSQLLocalDB";
+            this.servidor = "JOSE";
             this.seguridad = true;
         }
 
