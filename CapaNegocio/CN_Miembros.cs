@@ -29,5 +29,65 @@ namespace CapaNegocio
         {
             objDatos.EditarMiembro(idMiembro, idFamilia, rolFamiliar, dpi, nombres, apellidos, idGenero, fechaNacimiento, idProfesion, telefono, correo, fechaBautismo, fechaRecepcion, idRecepcion, idEstado, idMotivoRetiro, fechaRetiro, idAsentamiento, calleAvenida, referenciaCasa);
         }
+
+        public DataTable ObtenerEstado()
+        {
+            return objDatos.ObtenerEstadoMiembro();
+        }
+
+        public DataTable ObtenerMinisterios()
+        {
+            return objDatos.ObtenerMinisterios();
+        }
+
+        public DataTable ObtenerGeneros()
+        {
+            return objDatos.ObtenerGeneros();
+        }
+
+        public DataTable ObtenerTiposRecepcion()
+        {
+            return objDatos.ObtenerTiposRecepcion();
+        }
+
+        public DataTable ObtenerAsentamientos()
+        {
+            return objDatos.ObtenerAsentamientos();
+        }
+        public DataTable ObtenerProfesiones()
+        {
+            return objDatos.ObtenerProfesiones();
+        }
+
+        public DataTable ObtenerFamilias()
+        {
+            return objDatos.ObtenerFamilias();
+        }
+
+        public DataTable ObtenerMotivosRetiro()
+        {
+            return objDatos.ObtenerMotivosRetiro();
+        }
+
+        public DataTable BuscarMiembroPorNombre(string nombre)
+        {
+            return objDatos.BuscarMiembroPorNombre(nombre);
+        }
+        
+        // Metodos para Familias por Adami
+        public DataTable BuscarMiembrosSinFamilia(string ape1, string ape2, string nombre)
+        {
+            return objDatos.BuscarMiembrosHuerfanos(ape1, ape2, nombre);
+        }
+
+        public void VincularMiembroAFamilia(int idMiem, int idFam)
+        {
+            objDatos.AsignarFamilia(idMiem, idFam);
+        }
+
+        public DataTable FiltrarMiembrosPorFamilia(int id)
+        {
+            return objDatos.ListarMiembrosPorFamilia(id);
+        }
     }
 }

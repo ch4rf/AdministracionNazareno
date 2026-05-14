@@ -224,5 +224,302 @@ namespace CapaDatos
 
             return dt;
         }
+
+        public DataTable ObtenerEstadoMiembro() {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("SP_Obtener_Estado", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Estados de los miembros" + ex.Message);
+            }
+            finally 
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+
+        //sp_MostrarCatalogosMinisterios
+
+        public DataTable ObtenerMinisterios()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarCatalogosMinisterios", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Estados de los miembros" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerGeneros
+        public DataTable ObtenerGeneros()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerGeneros", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Generos de los miembros" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+        //sp_MostrarTiposRecepcion
+        public DataTable ObtenerTiposRecepcion()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarTiposRecepcion", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Tipos de Recepción" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerAsentamientos
+
+        public DataTable ObtenerAsentamientos()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerAsentamientos", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Asentamientos" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_MostrarProfesiones
+
+        public DataTable ObtenerProfesiones()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarProfesiones", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los Asentamientos" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+        //sp_ObtenerFamilias
+
+        public DataTable ObtenerFamilias()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerFamilias", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar las Familias" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+        //sp_MostrarMotivosRetiro
+        public DataTable ObtenerMotivosRetiro()
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_MostrarMotivosRetiro", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los motivos de retiro" + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+            return dt;
+        }
+
+
+        public DataTable BuscarMiembroPorNombre(string nombre)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conexion = new SqlConnection();
+
+            try
+            {
+                conexion = CD_Conexiones.getInstancia().CrearConexion();
+                SqlCommand cmd = new SqlCommand("sp_BuscarMiembrosPorNombre", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Le mandamos el nombre que queremos buscar
+                cmd.Parameters.AddWithValue("@Nombre", nombre);
+
+                conexion.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar los datos del miembro: " + ex.Message);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open) conexion.Close();
+            }
+
+            return dt;
+        }
+
+        // Metodos para familias por Adami
+        // ====================================================================
+        // 1. LISTAR MIEMBROS POR FAMILIA 
+        // ====================================================================
+        public DataTable ListarMiembrosPorFamilia(int idFam)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_MiembrosPorFamilia", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idfamilia", idFam);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Listar): " + ex.Message); }
+            }
+            return dt;
+        }
+        // ====================================================================
+        // 2. BUSCAR MIEMBROS SIN FAMILIA 
+        // ====================================================================
+        public DataTable BuscarMiembrosHuerfanos(string ape1, string ape2, string nombre)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_BuscarMiembrosHuerfanos", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@apellido1", ape1);
+                    cmd.Parameters.AddWithValue("@apellido2", ape2);
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Buscar): " + ex.Message); }
+            }
+            return dt;
+        }
+        // ====================================================================
+        // 3. ASIGNAR MIEMBRO A FAMILIA 
+        // ====================================================================
+        public void AsignarFamilia(int idMiembro, int idFamilia)
+        {
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    // Usamos un UPDATE directo para asegurar que el ID_Familia cambie
+                    string query = "UPDATE MIEMBROS SET ID_Familia = @idFam WHERE ID_Miembro = @idMiem";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    cmd.Parameters.AddWithValue("@idFam", idFamilia);
+                    cmd.Parameters.AddWithValue("@idMiem", idMiembro);
+
+                    conexion.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Asignar): " + ex.Message); }
+            }
+        }
     }
 }

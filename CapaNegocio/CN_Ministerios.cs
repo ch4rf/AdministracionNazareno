@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CapaDatos;
 using System.Data;
-using System.Text;
-using CapaDatos;
 
 namespace CapaNegocio
 {

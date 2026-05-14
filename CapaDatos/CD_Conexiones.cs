@@ -20,8 +20,8 @@ namespace CapaDatos
         private CD_Conexiones()
         {
             //Inicializamos nuestras variables privadas
-            this.Base = "IglesiaBD";
-            this.servidor = "jquimy\\MSSQLSERVER2025";
+            this.Base = "BD_IGLESIA";
+            this.servidor = "(localdb)\\MSSQLLocalDB";
             this.seguridad = true;
         }
 

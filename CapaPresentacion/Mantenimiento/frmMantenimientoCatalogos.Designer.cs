@@ -73,6 +73,8 @@
             // 
             // dgDatos
             // 
+            dgDatos.AllowUserToAddRows = false;
+            dgDatos.AllowUserToDeleteRows = false;
             dgDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgDatos.Location = new Point(37, 229);
             dgDatos.Margin = new Padding(3, 4, 3, 4);

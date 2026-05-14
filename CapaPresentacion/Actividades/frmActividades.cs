@@ -1,13 +1,8 @@
-﻿using CapaDatos;
-using CapaNegocio;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using CapaNegocio;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace CapaPresentacion
 {
