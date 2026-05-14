@@ -21,7 +21,7 @@ namespace CapaDatos
         {
             //Inicializamos nuestras variables privadas
             this.Base = "IglesiaBD";
-            this.servidor = "JOSE";
+            this.servidor = "(localdb)\\MSSQLLocalDB";
             this.seguridad = true;
         }
 

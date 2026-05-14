@@ -44,11 +44,7 @@ namespace CapaNegocio
         {
             objetoCD.EliminarMiembro(idMiembro);
         }
-        public void EditarMiembro(int id, string nom, string ape, string rol, string tel)
-        {
-            // Aquí puedes poner validaciones (ej: que nombre no esté vacío)
-            objetoCD.EditarMiembro(id, nom, ape, rol, tel);
-        }
+
         public string BorrarFamilia(int idFamilia)
         {
             // Verificamos si tiene miembros

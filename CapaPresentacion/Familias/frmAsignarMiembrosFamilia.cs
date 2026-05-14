@@ -26,11 +26,8 @@ namespace CapaPresentacion.Familias
 
         private void frmAsignarMiembrosFamilia_Load(object sender, EventArgs e)
         {
-            ConfigurarTablaTemporal(); //
-
-            // Ahora dirá: "Mostrando personas con apellidos Caal u Perez"
-            lblMostrar.Text = $"Mostrando personas con apellidos {_ape1} u {_ape2}"; //
-
+            ConfigurarTablaTemporal();
+            lblMostrar.Text = $"Mostrando personas con apellidos {_ape1} u {_ape2}"; 
             // Esto llamará a la base de datos buscando miembros que coincidan con uno u otro
             dgMiembrosAsignar.DataSource = objCN.BuscarMiembrosSinFamilia(_ape1, _ape2, ""); //
         }
@@ -95,7 +92,7 @@ namespace CapaPresentacion.Familias
                 }
 
                 MessageBox.Show("¡Miembros asignados correctamente!");
-                this.Close(); // Cerramos el formulario al terminar
+                this.Close(); 
             }
             catch (Exception ex)
             {

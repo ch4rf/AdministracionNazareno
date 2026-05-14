@@ -89,26 +89,6 @@ namespace CapaDatos
                 }
             }
         }
-        public void EditarMiembro(int idMiembro, string nombre, string apellido, string rol, string telefono)
-        {
-            using (SqlConnection sqlCon = CD_Conexiones.getInstancia().CrearConexion())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("UPDATE MIEMBROS SET Nombres = @nom, Apellidos = @ape, Rol_Familiar = @rol, Telefono = @tel WHERE ID_Miembro = @id", sqlCon);
-                    cmd.Parameters.AddWithValue("@id", idMiembro);
-                    cmd.Parameters.AddWithValue("@nom", nombre);
-                    cmd.Parameters.AddWithValue("@ape", apellido);
-                    cmd.Parameters.AddWithValue("@rol", rol);
-                    cmd.Parameters.AddWithValue("@tel", telefono);
-                    
-
-                    sqlCon.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex) { throw new Exception("Error al editar: " + ex.Message); }
-            }
-        }
         public int ContarMiembros(int idFamilia)
         {
             using (SqlConnection sqlCon = CD_Conexiones.getInstancia().CrearConexion())

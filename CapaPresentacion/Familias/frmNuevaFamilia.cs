@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using CapaNegocio; // Importante para usar CN_Familias
+using CapaNegocio; 
 
 namespace CapaPresentacion.Familias
 {
@@ -79,6 +79,11 @@ namespace CapaPresentacion.Familias
         {
             Limpiar();
             Close();
+        }
+
+        private void frmNuevaFamilia_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

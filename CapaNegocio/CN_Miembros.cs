@@ -68,9 +68,26 @@ namespace CapaNegocio
         {
             return objDatos.ObtenerMotivosRetiro();
         }
+
         public DataTable BuscarMiembroPorNombre(string nombre)
         {
             return objDatos.BuscarMiembroPorNombre(nombre);
+        }
+        
+        // Metodos para Familias por Adami
+        public DataTable BuscarMiembrosSinFamilia(string ape1, string ape2, string nombre)
+        {
+            return objDatos.BuscarMiembrosHuerfanos(ape1, ape2, nombre);
+        }
+
+        public void VincularMiembroAFamilia(int idMiem, int idFam)
+        {
+            objDatos.AsignarFamilia(idMiem, idFam);
+        }
+
+        public DataTable FiltrarMiembrosPorFamilia(int id)
+        {
+            return objDatos.ListarMiembrosPorFamilia(id);
         }
     }
 }

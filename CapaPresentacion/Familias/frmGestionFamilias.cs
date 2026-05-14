@@ -17,7 +17,6 @@ namespace CapaPresentacion.Familias
         {
             RefrescarDatos();
             btnEliminar.Enabled = false;
-            btnEditar.Enabled = false;
             btnAsignarMiembros.Enabled = false;
         }
 
@@ -65,24 +64,7 @@ namespace CapaPresentacion.Familias
             RefrescarDatos();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (dgMiembrosFamilia.CurrentRow != null)
-            {
-                // Leemos las 5 columnas disponibles (del 0 al 4)
-                int id = Convert.ToInt32(dgMiembrosFamilia.CurrentRow.Cells[0].Value);
-                string nom = dgMiembrosFamilia.CurrentRow.Cells[1].Value.ToString();
-                string ape = dgMiembrosFamilia.CurrentRow.Cells[2].Value.ToString();
-                string rol = dgMiembrosFamilia.CurrentRow.Cells[3].Value.ToString();
-                string tel = dgMiembrosFamilia.CurrentRow.Cells[4].Value.ToString();
 
-                // Llamamos al formulario pasando 5 parámetros
-                frmEditarMiembroFamilia ventana = new frmEditarMiembroFamilia(id, nom, ape, rol, tel);
-                ventana.ShowDialog();
-
-                CargarMiembrosDeLaFamilia(idFamiliaSeleccionada);
-            }
-        }
         public void RefrescarDatos()
         {
             try
@@ -110,7 +92,6 @@ namespace CapaPresentacion.Familias
                 // 2. NUEVA LÍNEA: Avisamos al formulario que seleccionamos una familia
                 seleccionandoFamilia = true;
                 btnEliminar.Enabled = true;
-                btnEditar.Enabled = true;
                 btnAsignarMiembros.Enabled = true;
             }
         }
@@ -181,6 +162,10 @@ namespace CapaPresentacion.Familias
                 }
             }
         }
-        
+
+        private void gbFamilias_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

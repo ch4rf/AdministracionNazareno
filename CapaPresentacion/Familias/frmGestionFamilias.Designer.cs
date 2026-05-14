@@ -30,7 +30,6 @@
         {
             gbMiembrosFamilia = new GroupBox();
             btnEliminar = new Button();
-            btnEditar = new Button();
             btnAsignarMiembros = new Button();
             dgMiembrosFamilia = new DataGridView();
             gbFamilias = new GroupBox();
@@ -48,10 +47,9 @@
             // gbMiembrosFamilia
             // 
             gbMiembrosFamilia.Controls.Add(btnEliminar);
-            gbMiembrosFamilia.Controls.Add(btnEditar);
             gbMiembrosFamilia.Controls.Add(btnAsignarMiembros);
             gbMiembrosFamilia.Controls.Add(dgMiembrosFamilia);
-            gbMiembrosFamilia.Location = new Point(452, 31);
+            gbMiembrosFamilia.Location = new Point(453, 31);
             gbMiembrosFamilia.Name = "gbMiembrosFamilia";
             gbMiembrosFamilia.Size = new Size(890, 659);
             gbMiembrosFamilia.TabIndex = 1;
@@ -61,7 +59,7 @@
             // btnEliminar
             // 
             btnEliminar.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEliminar.Location = new Point(713, 578);
+            btnEliminar.Location = new Point(713, 579);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(171, 55);
             btnEliminar.TabIndex = 7;
@@ -69,21 +67,10 @@
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
             // 
-            // btnEditar
-            // 
-            btnEditar.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEditar.Location = new Point(604, 578);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(103, 55);
-            btnEditar.TabIndex = 6;
-            btnEditar.Text = "Editar";
-            btnEditar.UseVisualStyleBackColor = true;
-            btnEditar.Click += btnEditar_Click;
-            // 
             // btnAsignarMiembros
             // 
             btnAsignarMiembros.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAsignarMiembros.Location = new Point(18, 578);
+            btnAsignarMiembros.Location = new Point(18, 579);
             btnAsignarMiembros.Name = "btnAsignarMiembros";
             btnAsignarMiembros.Size = new Size(185, 55);
             btnAsignarMiembros.TabIndex = 4;
@@ -108,17 +95,18 @@
             gbFamilias.Controls.Add(dgFamilias);
             gbFamilias.Controls.Add(txtBuscarFamilia);
             gbFamilias.Controls.Add(lblBuscar);
-            gbFamilias.Location = new Point(36, 31);
+            gbFamilias.Location = new Point(37, 31);
             gbFamilias.Name = "gbFamilias";
             gbFamilias.Size = new Size(395, 659);
             gbFamilias.TabIndex = 2;
             gbFamilias.TabStop = false;
             gbFamilias.Text = "Familias";
+            gbFamilias.Enter += gbFamilias_Enter;
             // 
             // btnEliminarFam
             // 
             btnEliminarFam.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEliminarFam.Location = new Point(199, 578);
+            btnEliminarFam.Location = new Point(199, 579);
             btnEliminarFam.Name = "btnEliminarFam";
             btnEliminarFam.Size = new Size(190, 55);
             btnEliminarFam.TabIndex = 4;
@@ -129,7 +117,7 @@
             // btnAgregarFamilia
             // 
             btnAgregarFamilia.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAgregarFamilia.Location = new Point(6, 578);
+            btnAgregarFamilia.Location = new Point(6, 579);
             btnAgregarFamilia.Name = "btnAgregarFamilia";
             btnAgregarFamilia.Size = new Size(187, 55);
             btnAgregarFamilia.TabIndex = 3;
@@ -149,7 +137,7 @@
             // 
             // txtBuscarFamilia
             // 
-            txtBuscarFamilia.Location = new Point(80, 58);
+            txtBuscarFamilia.Location = new Point(80, 59);
             txtBuscarFamilia.Name = "txtBuscarFamilia";
             txtBuscarFamilia.Size = new Size(309, 27);
             txtBuscarFamilia.TabIndex = 1;
@@ -158,7 +146,7 @@
             // 
             lblBuscar.AutoSize = true;
             lblBuscar.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblBuscar.Location = new Point(6, 58);
+            lblBuscar.Location = new Point(6, 59);
             lblBuscar.Name = "lblBuscar";
             lblBuscar.Size = new Size(68, 23);
             lblBuscar.TabIndex = 0;
@@ -194,7 +182,6 @@
         private Button btnAgregarFamilia;
         private DataGridView dgFamilias;
         private Button btnEliminar;
-        private Button btnEditar;
         private Button btnAsignarMiembros;
         private Button btnEliminarFam;
     }

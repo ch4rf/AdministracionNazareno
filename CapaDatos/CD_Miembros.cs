@@ -456,5 +456,70 @@ namespace CapaDatos
 
             return dt;
         }
+
+        // Metodos para familias por Adami
+        // ====================================================================
+        // 1. LISTAR MIEMBROS POR FAMILIA 
+        // ====================================================================
+        public DataTable ListarMiembrosPorFamilia(int idFam)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_MiembrosPorFamilia", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idfamilia", idFam);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Listar): " + ex.Message); }
+            }
+            return dt;
+        }
+        // ====================================================================
+        // 2. BUSCAR MIEMBROS SIN FAMILIA 
+        // ====================================================================
+        public DataTable BuscarMiembrosHuerfanos(string ape1, string ape2, string nombre)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_BuscarMiembrosHuerfanos", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@apellido1", ape1);
+                    cmd.Parameters.AddWithValue("@apellido2", ape2);
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Buscar): " + ex.Message); }
+            }
+            return dt;
+        }
+        // ====================================================================
+        // 3. ASIGNAR MIEMBRO A FAMILIA 
+        // ====================================================================
+        public void AsignarFamilia(int idMiembro, int idFamilia)
+        {
+            using (SqlConnection conexion = CD_Conexiones.getInstancia().CrearConexion())
+            {
+                try
+                {
+                    // Usamos un UPDATE directo para asegurar que el ID_Familia cambie
+                    string query = "UPDATE MIEMBROS SET ID_Familia = @idFam WHERE ID_Miembro = @idMiem";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    cmd.Parameters.AddWithValue("@idFam", idFamilia);
+                    cmd.Parameters.AddWithValue("@idMiem", idMiembro);
+
+                    conexion.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex) { throw new Exception("Error CD_Miembros (Asignar): " + ex.Message); }
+            }
+        }
     }
 }
